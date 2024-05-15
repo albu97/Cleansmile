@@ -18,7 +18,9 @@ public class MainActivity extends AppCompatActivity {
         SeekBar zoom = findViewById(R.id.zoom);
         EditText user = findViewById(R.id.User);
         EditText password = findViewById(R.id.Password);
+
     }
+
     //TESt
 
 }
