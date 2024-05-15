@@ -18,7 +18,7 @@
             android:label="@string/title_activity_main_tabbed"
             android:theme="@style/Theme.Cleansmile.NoActionBar" />
         <activity
-            android:name=".MainActivity"
+            android:name=".StartActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
