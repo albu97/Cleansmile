@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 public class AlterWaehlenActivity extends AppCompatActivity {
+    public static final String NAME ="com.example.cleansmile.extra.NAME";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,12 @@ public class AlterWaehlenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(AlterWaehlenActivity.this,);
+                Intent intent = new Intent(AlterWaehlenActivity.this,RealMainActivity.class);
+                String selektiertesAlter = spinner.getSelectedItem().toString();
+
+                intent.putExtra(AlterWaehlenActivity.NAME,selektiertesAlter);
+
+                startActivity(intent);
             }
         });
 
