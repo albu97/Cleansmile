@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -45,7 +46,10 @@ public class StartActivity extends AppCompatActivity {
         zoom.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                seekBar.setText(progress+"/"+"50");
+                int pos = seekBar.getVerticalScrollbarPosition();
+                if (pos != 0){
+
+                }
             }
 
             @Override
