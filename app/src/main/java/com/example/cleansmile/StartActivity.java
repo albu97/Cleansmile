@@ -8,9 +8,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class StartActivity extends AppCompatActivity {
-
+    private View contentView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +45,11 @@ public class StartActivity extends AppCompatActivity {
         });
         // Video: https://www.youtube.com/watch?v=dJvpDtFrk0A
         zoom.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int pos = zoom.getVerticalScrollbarPosition();
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                int pos = seekBar.getVerticalScrollbarPosition();
-                if (pos != 0){
+                int pos1 = seekBar.getVerticalScrollbarPosition();
+                if (pos1 != 0){
                     int sizeTextTypeUniform = TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM;
                     double zoom = sizeTextTypeUniform * (pos/100);
                 }
@@ -55,6 +57,8 @@ public class StartActivity extends AppCompatActivity {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
+                Toast.makeText(StartActivity.this, pos + "%", Toast.LENGTH_SHORT).show();
+
 
             }
 
@@ -63,7 +67,6 @@ public class StartActivity extends AppCompatActivity {
 
             }
         });
-
 
 
 
