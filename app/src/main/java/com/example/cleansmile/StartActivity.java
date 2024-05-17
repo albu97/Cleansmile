@@ -48,7 +48,8 @@ public class StartActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 int pos = seekBar.getVerticalScrollbarPosition();
                 if (pos != 0){
-
+                    int sizeTextTypeUniform = TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM;
+                    double zoom = sizeTextTypeUniform * (pos/100);
                 }
             }
 
