@@ -7,7 +7,7 @@ public class db {
         String url = "jdbc:mysql://localhost:3306/mydb";
         String username = "java";
         String password = "password";
-
+        //Verbesserungen werden noch erledigt
         Toast toast = Toast.makeText(db.this, "Connecting database ...", Toast.LENGTH_LONG).show();
 
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
