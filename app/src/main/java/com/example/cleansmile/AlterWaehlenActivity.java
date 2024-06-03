@@ -21,7 +21,7 @@ public class AlterWaehlenActivity extends AppCompatActivity {
 
         Button button =findViewById(R.id.button_submit);
 
-        String []  alter = {"0-13","13-50","50+"};
+        String []  alter = {"0-12","13-50","50+"};
 
         ArrayAdapter<String> adapter=new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,alter);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
