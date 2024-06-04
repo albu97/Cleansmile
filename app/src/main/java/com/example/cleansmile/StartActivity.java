@@ -14,6 +14,8 @@ import javax.sql.DataSource;
 
 public class StartActivity extends AppCompatActivity {
     private View contentView;
+    private Object dataBase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +37,9 @@ public class StartActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startRealMainActivity();
             }
+
         });
         //Neuen User anlegen
         newUser.setOnClickListener(new View.OnClickListener() {
@@ -47,7 +50,7 @@ public class StartActivity extends AppCompatActivity {
         });
         // Video: https://www.youtube.com/watch?v=dJvpDtFrk0A
         zoom.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int pos = zoom.getVerticalScrollbarPosition();
+            int pos = zoom.getVerticalScrollbarPosition()+1;
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 int pos1 = seekBar.getVerticalScrollbarPosition();

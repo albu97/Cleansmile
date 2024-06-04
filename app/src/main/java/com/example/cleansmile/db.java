@@ -3,7 +3,7 @@ import android.widget.Toast;
 
 import java.sql.*;
 public class db {
-    public void dataBase(){
+    public static void dataBase(){
         String url = "jdbc:mysql://localhost:3306/mydb";
         String username = "java";
         String password = "password";
