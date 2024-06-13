@@ -2,6 +2,7 @@ package com.example.cleansmile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +25,7 @@ public class StartActivity extends AppCompatActivity {
         EditText username = findViewById(R.id.User);
         EditText password = findViewById(R.id.Password);
         Button newUser = findViewById(R.id.newUser);
+        TextView textZoom = findViewById(R.id.textZoom);
 
         String user = username.getText().toString();
         String passWord = password.getText().toString();
@@ -35,7 +37,8 @@ public class StartActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getApplicationContext(), AlterWaehlenActivity.class);
+                //String logIn = intent.getStringExtra(RealMainActivity.NAME);
             }
         });
         //Neuen User anlegen
@@ -47,21 +50,15 @@ public class StartActivity extends AppCompatActivity {
         });
         // Video: https://www.youtube.com/watch?v=dJvpDtFrk0A
         zoom.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int pos = zoom.getVerticalScrollbarPosition();
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                int pos1 = seekBar.getVerticalScrollbarPosition();
-                if (pos1 != 0){
-                    int sizeTextTypeUniform = TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM;
-                    double zoom = sizeTextTypeUniform * (pos/100);
-                }
+                float textSize = progress * 1.5f;
+                textZoom.setTextSize(textSize);
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                Toast.makeText(StartActivity.this, pos + "%", Toast.LENGTH_SHORT).show();
-
-
             }
 
             @Override
