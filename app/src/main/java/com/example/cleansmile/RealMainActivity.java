@@ -188,5 +188,9 @@ public class RealMainActivity extends AppCompatActivity {
         videoView.setVideoURI(uri);
         videoView.start();*/
 
+
+        //Link hinzufügen
+        //https://developer.android.com/studio/write/app-link-indexing?hl=de
+
     }
 }

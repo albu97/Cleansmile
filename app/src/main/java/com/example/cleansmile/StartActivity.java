@@ -2,6 +2,7 @@ package com.example.cleansmile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -35,13 +36,18 @@ public class StartActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), AlterWaehlenActivity.class);
 
+                startActivity(intent);
             }
         });
         //Neuen User anlegen
         newUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //intent erstellen
+                //startActivity(intent)
 
             }
         });
