@@ -25,6 +25,7 @@ public class StartActivity extends AppCompatActivity {
         EditText username = findViewById(R.id.User);
         EditText password = findViewById(R.id.Password);
         Button newUser = findViewById(R.id.newUser);
+        TextView textZoom = findViewById(R.id.textZoom);
 
         String user = username.getText().toString();
         String passWord = password.getText().toString();
@@ -37,17 +38,14 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AlterWaehlenActivity.class);
-
                 startActivity(intent);
+                //String logIn = intent.getStringExtra(RealMainActivity.NAME);
             }
         });
         //Neuen User anlegen
         newUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //intent erstellen
-                //startActivity(intent)
 
             }
         });
@@ -65,7 +63,6 @@ public class StartActivity extends AppCompatActivity {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                Toast.makeText(StartActivity.this, pos + "%", Toast.LENGTH_SHORT).show();
 
 
             }
