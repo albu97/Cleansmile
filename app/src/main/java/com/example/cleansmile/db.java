@@ -1,9 +1,25 @@
 package com.example.cleansmile;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import java.sql.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 public class db {
-    public void dataBase(){
+    protected SQLiteOpenHelper createOpenHelper(){
+
+    }
+
+}
+/*
+public void dataBase(){
         String url = "jdbc:mysql://localhost:3306/mydb";
         String username = "java";
         String password = "password";
@@ -15,5 +31,4 @@ public class db {
         } catch (SQLException e) {
             throw new IllegalStateException("Cannot connect the database!", e);
         }
-    }
-}
+ */

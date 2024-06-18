@@ -3,8 +3,11 @@ package com.example.cleansmile;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
@@ -20,7 +23,7 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button button = findViewById(R.id.Button);
+        Button logButton = findViewById(R.id.LogButton);
         SeekBar zoom = findViewById(R.id.zoom);
         EditText username = findViewById(R.id.User);
         EditText password = findViewById(R.id.Password);
@@ -29,12 +32,18 @@ public class StartActivity extends AppCompatActivity {
 
         String user = username.getText().toString();
         String passWord = password.getText().toString();
+        WindowManager wm = getWindowManager();
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int maxScreenSize = Math.max(size.x, size.y);
 
+        zoom.setMax(maxScreenSize);
 
         //DB anbindung erforderlich (ROOM)
         //Bei Clicken von button -> prüfen ob Daten korrekt sind
         //Bei newUser -> prüfen ob Daten noch nicht vorhanden sind
-        button.setOnClickListener(new View.OnClickListener() {
+        logButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AlterWaehlenActivity.class);
@@ -51,14 +60,17 @@ public class StartActivity extends AppCompatActivity {
         });
         // Video: https://www.youtube.com/watch?v=dJvpDtFrk0A
         zoom.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int pos = zoom.getVerticalScrollbarPosition();
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                int pos1 = seekBar.getVerticalScrollbarPosition();
-                if (pos1 != 0){
-                    int sizeTextTypeUniform = TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM;
-                    double zoom = sizeTextTypeUniform * (pos/100);
-                }
+             float textSize = progress*1.5f;
+             textZoom.setTextSize(textSize);
+             logButton.setTextSize(textSize);
+             username.setTextSize(textSize);
+             password.setTextSize(textSize);
+             newUser.setTextSize(textSize);
+
+
             }
 
             @Override
