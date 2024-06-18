@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 public class RealMainActivity extends AppCompatActivity {
 
@@ -53,7 +55,7 @@ public class RealMainActivity extends AppCompatActivity {
     public void setupKinderFunktionen(){
 
         TextView timerTextView = findViewById(R.id.timer_sekunden);
-        VideoView videoView = findViewById(R.id.video_screen);
+        WebView videoView = findViewById(R.id.video_screen);
         Button startButton = findViewById(R.id.zaehne_Putzen);
 
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -66,10 +68,17 @@ public class RealMainActivity extends AppCompatActivity {
 
     }
 
-    public void kinderFunktionen(TextView timerTextView, VideoView videoView){
+    public void kinderFunktionen(TextView timerTextView, WebView videoView){
 
         //+ Foto hinzufügen
         getWindow().getDecorView().setBackgroundColor(Color.YELLOW);
+
+        //wichtig: WebView to load a YouTube video
+        WebSettings webSettings = videoView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        videoView.setWebViewClient(new WebViewClient());
+        String videoUrl = "https://www.youtube.com/watch?v=XcC3IhE9nlQ";
+        videoView.loadUrl(videoUrl);
 
 
         new CountDownTimer(120000,1000){
@@ -98,7 +107,7 @@ public class RealMainActivity extends AppCompatActivity {
     public void setupErwachseneFunktionen(){
 
         TextView timerTextView = findViewById(R.id.timer_sekunden);
-        VideoView videoView = findViewById(R.id.video_screen);
+        WebView videoView = findViewById(R.id.video_screen);
         Button startButton = findViewById(R.id.zaehne_Putzen);
 
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -111,11 +120,17 @@ public class RealMainActivity extends AppCompatActivity {
 
     }
 
-    public void erwachseneFunktionen(TextView timerTextView, VideoView videoView){
+    public void erwachseneFunktionen(TextView timerTextView, WebView videoView){
 
         //+ Foto hinzufügen
         getWindow().getDecorView().setBackgroundColor(Color.GREEN);
 
+        //wichtig: WebView to load a YouTube video
+        WebSettings webSettings = videoView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        videoView.setWebViewClient(new WebViewClient());
+        String videoUrl = "https://www.youtube.com/watch?v=XcC3IhE9nlQ";
+        videoView.loadUrl(videoUrl);
 
         new CountDownTimer(120000,1000){
 
@@ -143,10 +158,11 @@ public class RealMainActivity extends AppCompatActivity {
 
     }
 
+
    public void setupSeniorFunktionen(){
 
        TextView timerTextView = findViewById(R.id.timer_sekunden);
-       VideoView videoView = findViewById(R.id.video_screen);
+       WebView videoView = findViewById(R.id.video_screen);
        Button startButton = findViewById(R.id.zaehne_Putzen);
 
        startButton.setOnClickListener(new View.OnClickListener() {
@@ -160,9 +176,17 @@ public class RealMainActivity extends AppCompatActivity {
 
    }
 
-    public void seniorFunktionen(TextView timerTextView,VideoView videoView){
+    public void seniorFunktionen(TextView timerTextView,WebView videoView){
 
         getWindow().getDecorView().setBackgroundColor(Color.LTGRAY);
+
+
+        //wichtig: WebView to load a YouTube video
+        WebSettings webSettings = videoView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        videoView.setWebViewClient(new WebViewClient());
+        String videoUrl = "https://www.youtube.com/watch?v=XcC3IhE9nlQ";
+        videoView.loadUrl(videoUrl);
 
         new CountDownTimer(120000,1000){
 
