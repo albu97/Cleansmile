@@ -13,10 +13,11 @@ import java.util.Map;
 import java.util.Set;
 
 public class db {
-    protected SQLiteOpenHelper createOpenHelper(){
+
+   /* protected SQLiteOpenHelper createOpenHelper(){
 
     }
-
+*/
 }
 /*
 public void dataBase(){

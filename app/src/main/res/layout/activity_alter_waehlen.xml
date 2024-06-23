@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
     android:orientation="vertical"
     tools:context=".AlterWaehlenActivity">
 
@@ -18,16 +19,24 @@
     <Spinner
         android:id="@+id/alter_waehlen"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Bitte wählen Sie ihr Alter!"
+        android:layout_height="50dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="100dp" />
+        android:layout_marginBottom="100dp"
+        android:text="Bitte wählen Sie ihr Alter!"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/custom_button"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
 
     <Button
         android:id="@+id/button_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:text="Bestätigen"
-        android:layout_gravity="center_horizontal" />
+        android:textColor="#FFFFFF"
+        android:background="@drawable/custom_button"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
 </LinearLayout>

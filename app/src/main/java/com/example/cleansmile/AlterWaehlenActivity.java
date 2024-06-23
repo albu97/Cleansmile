@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+
+import com.google.android.material.snackbar.Snackbar;
 
 public class AlterWaehlenActivity extends AppCompatActivity {
     public static final String NAME ="com.example.cleansmile.extra.NAME";
@@ -21,7 +24,7 @@ public class AlterWaehlenActivity extends AppCompatActivity {
 
         Button button =findViewById(R.id.button_submit);
 
-        String []  alter = {"0-12","13-50","50+"};
+        String []  alter = {" ","3-12","13-50","50+"};
 
         ArrayAdapter<String> adapter=new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,alter);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -31,12 +34,22 @@ public class AlterWaehlenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(AlterWaehlenActivity.this,RealMainActivity.class);
                 String selektiertesAlter = spinner.getSelectedItem().toString();
 
-                intent.putExtra(AlterWaehlenActivity.NAME,selektiertesAlter);
+                if (selektiertesAlter.equals(" ")){
 
-                startActivity(intent);
+                    Log.e("AlterWaehlenActivity", "Bitte wählen Sie ihr Alter aus !");
+                   Snackbar.make(findViewById(R.id.button_submit), "Bitte wählen Sie ihr Alter aus!", Snackbar.LENGTH_LONG).show();
+                }
+                else{
+
+                    Intent intent = new Intent(AlterWaehlenActivity.this,RealMainActivity.class);
+
+                    intent.putExtra(AlterWaehlenActivity.NAME,selektiertesAlter);
+
+                    startActivity(intent);
+                }
+
             }
         });
 

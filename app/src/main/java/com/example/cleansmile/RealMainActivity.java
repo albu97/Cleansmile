@@ -27,15 +27,9 @@ public class RealMainActivity extends AppCompatActivity {
         String holeselektiertesAlter=intent.getStringExtra(AlterWaehlenActivity.NAME);
 
 
-        if(holeselektiertesAlter == null) {
-
-            Log.e("RealMainActivity", "Bitte wählen Sie ihr Alter aus !");
-            return;
-        }
-
             switch (holeselektiertesAlter){
 
-                case "0-12":
+                case "3-12":
 
                     setupKinderFunktionen();
                     break;
