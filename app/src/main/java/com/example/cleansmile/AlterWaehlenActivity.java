@@ -24,9 +24,9 @@ public class AlterWaehlenActivity extends AppCompatActivity {
 
         Button button =findViewById(R.id.button_submit);
 
-        String []  alter = {" ","3-12","13-50","50+"};
+        String []  alter = {"Select Age","3-12","13-50","50+"};
 
-        ArrayAdapter<String> adapter=new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,alter);
+        ArrayAdapter<CharSequence> adapter= ArrayAdapter.createFromResource(this, R.array.age_array, R.layout.custom_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
@@ -36,10 +36,10 @@ public class AlterWaehlenActivity extends AppCompatActivity {
 
                 String selektiertesAlter = spinner.getSelectedItem().toString();
 
-                if (selektiertesAlter.equals(" ")){
+                if (selektiertesAlter.equals("Select Age")){
 
-                    Log.e("AlterWaehlenActivity", "Bitte wählen Sie ihr Alter aus !");
-                   Snackbar.make(findViewById(R.id.button_submit), "Bitte wählen Sie ihr Alter aus!", Snackbar.LENGTH_LONG).show();
+                    Log.e("AlterWaehlenActivity", "Please select your age!");
+                   Snackbar.make(findViewById(R.id.button_submit), "Please select your age!", Snackbar.LENGTH_LONG).show();
                 }
                 else{
 
