@@ -9,15 +9,15 @@
 
     <Button
         android:id="@+id/LogButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_row="3"
         android:layout_column="0"
+        android:background="@drawable/custom_button"
         android:text="Login"
         android:textColor="#FFFFFF"
-        android:background="@drawable/custom_button"
         android:textSize="16sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <SeekBar
         android:id="@+id/zoom"
@@ -43,7 +43,7 @@
         android:layout_height="409dp"
         android:layout_row="0"
         android:layout_column="0"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@mipmap/logo_end" />
 
     <EditText
         android:id="@+id/User"
@@ -67,15 +67,15 @@
 
     <Button
         android:id="@+id/newUser"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_row="6"
         android:layout_column="0"
+        android:background="@drawable/gradient_button"
         android:text="new User"
         android:textColor="#FFFFFF"
-        android:background="@drawable/custom_button"
         android:textSize="16sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
 
 </GridLayout>

@@ -41,7 +41,6 @@ public class RealMainActivity extends AppCompatActivity {
                 case "50+":
                     setupSeniorFunktionen();
                     break;
-
       }
 
     }
@@ -65,14 +64,21 @@ public class RealMainActivity extends AppCompatActivity {
     public void kinderFunktionen(TextView timerTextView, WebView videoView){
 
         //+ Foto hinzufügen
-        getWindow().getDecorView().setBackgroundColor(Color.YELLOW);
 
         //wichtig: WebView to load a YouTube video
         WebSettings webSettings = videoView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+
         videoView.setWebViewClient(new WebViewClient());
+
         String videoUrl = "https://www.youtube.com/watch?v=XcC3IhE9nlQ";
-        videoView.loadUrl(videoUrl);
+        //videoView.loadUrl(videoUrl);
+        String html = "<html><body><iframe width=\"100%\" height=\"100%\" src=\"" + videoUrl + "\" frameborder=\"0\" allowfullscreen></iframe></body></html>";
+        videoView.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
 
 
         new CountDownTimer(120000,1000){
@@ -80,14 +86,13 @@ public class RealMainActivity extends AppCompatActivity {
             @Override
             public void onTick(long millisUntilFinished) {
 
-                timerTextView.setText("Verbleibende Sekunden: " + millisUntilFinished/1000);
+                timerTextView.setText("Remaining time: " + millisUntilFinished/1000);
             }
             @Override
             public void onFinish() {
 
-                Log.d("RealMainActivity", "Timer beendet");
-                timerTextView.setText("Die Zeit ist vorbei");
-
+                Log.d("RealMainActivity", "Timer ended");
+                timerTextView.setText("The time is over - Good Job");
             }
         }.start();
 
