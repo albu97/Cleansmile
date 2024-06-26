@@ -19,7 +19,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebSettings;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -34,9 +34,10 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
     private Sensor accelerometer;
     private Sensor gyroscope;
     private TextView timerTextView;
-    private WebView videoView;
+    private WebView webView;
     private Button startButton;
     private ArrayList<String> sensorDataList = new ArrayList<>();
+    private CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         String holeselektiertesAlter = intent.getStringExtra(AlterWaehlenActivity.NAME);
 
         timerTextView = findViewById(R.id.timer_sekunden);
-        videoView = findViewById(R.id.video_screen);
+        webView = findViewById(R.id.video_screen);
         startButton = findViewById(R.id.zaehne_Putzen);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -79,6 +80,7 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         }
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -118,54 +120,28 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
             public void onClick(View v) {
                 registerSensors();
                 kinderFunktionen();
+                startTimer();
             }
         });
     }
 
     private void kinderFunktionen() {
-        setupVideo("https://www.youtube.com/watch?v=XcC3IhE9nlQ");
-        startTimer();
-    }
 
-    private void setupErwachseneFunktionen() {
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                registerSensors();
-                erwachseneFunktionen();
-            }
-        });
-    }
+        if (webView!=null){
+            webView.getSettings().setJavaScriptEnabled(true);
+            webView.addJavascriptInterface(new WebAppInterface(), "Android");
+            webView.setWebViewClient(new WebViewClient() {
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                }
+            });
 
-    private void erwachseneFunktionen() {
-        setupVideo("https://www.youtube.com/watch?v=XcC3IhE9nlQ");
-        startTimer();
-    }
+            String videoUrl = "<html><body><iframe width=\"100%\" " +
+                    "height=\"100%\" src=\"https://www.youtube.com/embed/XcC3IhE9nlQ?autoplay=1\" " +
+                    "frameborder=\"0\" allowfullscreen></iframe></body></html>";
 
-    private void setupSeniorFunktionen() {
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                registerSensors();
-                seniorFunktionen();
-            }
-        });
-    }
-
-    private void seniorFunktionen() {
-        setupVideo("https://www.youtube.com/watch?v=XcC3IhE9nlQ");
-        startTimer();
-    }
-
-    private void setupVideo(String videoUrl) {
-        WebSettings webSettings = videoView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+            webView.loadData(videoUrl, "text/html", "utf-8");
         }
-        videoView.setWebViewClient(new WebViewClient());
-        String html = "<html><body><iframe width=\"100%\" height=\"100%\" src=\"" + videoUrl + "\" frameborder=\"0\" allowfullscreen></iframe></body></html>";
-        videoView.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
     }
 
     private void startTimer() {
@@ -179,10 +155,79 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
             public void onFinish() {
                 Log.d("RealMainActivity", "Timer ended");
                 timerTextView.setText("The time is over - Good Job");
-                unregisterSensors();
+                stopVideo();
+                registerSensors();
             }
         }.start();
     }
+
+    private void stopVideo() {
+        if (webView != null) {
+            webView.post(new Runnable() {
+                @Override
+                public void run() {
+                    webView.evaluateJavascript("(function() { " +
+                            "var iframe = document.querySelector('iframe'); " +
+                            "var video = iframe.contentWindow.document.querySelector('video'); " +
+                            "if (video) { video.pause(); } })();", null);
+                }
+            });
+        }
+    }
+
+    private class WebAppInterface {
+        @JavascriptInterface
+        public void stopVideoFromJava() {
+            stopVideo();
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (countDownTimer !=null) {
+            countDownTimer.cancel();
+        }
+    }
+
+
+    private void setupErwachseneFunktionen() {
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                registerSensors();
+                erwachseneFunktionen();
+            }
+        });
+    }
+
+    private void erwachseneFunktionen() {
+        if (webView!=null){
+
+            webView.loadUrl("https://www.youtube.com/watch?v=XcC3IhE9nlQ");
+        }
+       // startTimer();
+    }
+
+    private void setupSeniorFunktionen() {
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                registerSensors();
+                seniorFunktionen();
+            }
+        });
+    }
+
+    private void seniorFunktionen() {
+        if (webView!=null){
+
+            webView.loadUrl("https://www.youtube.com/watch?v=XcC3IhE9nlQ");
+        }
+       // startTimer();
+    }
+
+
+
 
     private void registerSensors() {
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
