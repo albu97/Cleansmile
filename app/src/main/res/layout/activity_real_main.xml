@@ -71,23 +71,17 @@
         android:id="@+id/timer_sekunden"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_columnSpan="2"
-        android:layout_gravity="center"
-        android:layout_marginTop="45dp"
+        android:layout_below="@id/button_layout"
+        android:layout_marginTop="15dp"
         android:gravity="center"
-        android:padding="50dp"
         android:text="120"
-        android:textSize="40dp" />
+        android:textSize="40sp" />
 
     <WebView
         android:id="@+id/video_screen"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_rowSpan="2"
-        android:layout_rowWeight="1"
-        android:layout_columnSpan="2"
-        android:layout_columnWeight="1"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp" />
+        android:layout_below="@id/timer_sekunden"
+        android:layout_marginTop="40dp" />
 
 </RelativeLayout>
