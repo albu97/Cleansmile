@@ -1,7 +1,10 @@
 package com.example.cleansmile;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -18,10 +21,13 @@ import javax.sql.DataSource;
 
 public class StartActivity extends AppCompatActivity {
     private View contentView;
+    DrawerLayout menu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        menu= findViewById(R.id.background_menu);
 
         Button logButton = findViewById(R.id.LogButton);
         SeekBar zoom = findViewById(R.id.zoom);
@@ -86,8 +92,54 @@ public class StartActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    public void ClickOnMenu(View view){
+        RealMainActivity.openMenu(menu);
+    }
+
+    public void LogoClick(View view){
+        RealMainActivity.closeMenu(menu);
+    }
+
+    public void MainPageClick(View view){
+        recreate();
+    }
+
+    public void ShowDataClick(View view){
+
+        Toast.makeText(this,"You have to log in!",Toast.LENGTH_SHORT).show();
 
     }
 
+    public void AboutClick(View view){
+        //About us Aktivität, werde ich morgen erstellen!
+        Toast.makeText(this,"Über uns-Seite !!!!",Toast.LENGTH_SHORT).show();
+    }
+
+    public void ExitClick(View view){
+
+        AlertDialog.Builder warningWindow = new AlertDialog.Builder(StartActivity.this);
+        warningWindow.setTitle("Exit");
+        warningWindow.setMessage("Are you sure you want to exit?");
+
+        warningWindow.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finishAffinity();
+                System.exit(0);
+            }
+        });
+
+        warningWindow.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+            }
+        });
+
+        warningWindow.show();
+    }
 
 }

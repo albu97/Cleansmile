@@ -1,87 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:alignmentMode="alignMargins"
-    android:columnCount="2"
-    android:rowCount="3"
-    android:padding="16dp"
-    android:background="@drawable/background_gradient"
+    android:id="@+id/background_menu"
     tools:context=".RealMainActivity">
 
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_alignParentTop="true"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:title="Toolbar" />
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:background="@drawable/background_gradient">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/button_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:orientation="horizontal"
-        android:gravity="center">
+            <include
+                layout="@layout/main_toolbar"/>
 
-        <Button
-            android:id="@+id/zaehne_Putzen"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:text="Start"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/round_button"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/stopButton"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/round_button"
-            android:text="Stop"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/restartButton"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/round_button"
-            android:text="Restart"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
+        <LinearLayout
+            android:id="@+id/button_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/zaehne_Putzen"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/round_button"
+                android:text="@string/start"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/timer_sekunden"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/button_layout"
-        android:layout_marginTop="15dp"
-        android:gravity="center"
-        android:text="120"
-        android:textSize="40sp" />
+            <Button
+                android:id="@+id/stopButton"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/round_button"
+                android:text="@string/stop"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-    <WebView
-        android:id="@+id/video_screen"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_below="@id/timer_sekunden"
-        android:layout_marginTop="40dp" />
+            <Button
+                android:id="@+id/restartButton"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/round_button"
+                android:text="@string/restart"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/timer_sekunden"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/button_layout"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:text="140"
+            android:textSize="40sp" />
+
+        <WebView
+            android:id="@+id/video_screen"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_below="@id/timer_sekunden"
+            android:layout_marginTop="60dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:layout_gravity="start">
+
+        <include
+            layout="@layout/menu_inhalt"/>
+    </RelativeLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>

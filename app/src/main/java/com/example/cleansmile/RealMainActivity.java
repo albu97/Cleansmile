@@ -1,12 +1,12 @@
 package com.example.cleansmile;
 
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -15,11 +15,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -30,6 +26,7 @@ import java.util.ArrayList;
 
 public class RealMainActivity extends AppCompatActivity implements SensorEventListener {
 
+    DrawerLayout menu;
     private SensorManager sensorManager;
     private Sensor accelerometer;
     private Sensor gyroscope;
@@ -37,12 +34,13 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
     private WebView webView;
     private Button startButton;
     private ArrayList<String> sensorDataList = new ArrayList<>();
-    private CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_real_main);
+
+        menu= findViewById(R.id.background_menu);
 
         Intent intent = getIntent();
         String holeselektiertesAlter = intent.getStringExtra(AlterWaehlenActivity.NAME);
@@ -54,17 +52,6 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        ActionBar actionBar = getSupportActionBar();
-
-        if (actionBar != null) {
-            actionBar.setTitle("Menu");
-            actionBar.setDisplayUseLogoEnabled(true);
-            actionBar.setDisplayShowHomeEnabled(true);
-        }
 
 
         switch (holeselektiertesAlter) {
@@ -78,41 +65,64 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
                 setupSeniorFunktionen();
                 break;
         }
-
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
-        return true;
+    public void ClickOnMenu(View view){
+        openMenu(menu);
     }
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()){
+    public static void openMenu(DrawerLayout menu) {
+        menu.openDrawer(GravityCompat.START);
+    }
 
-            //error: constant expression required case R.id.zeige_data:
+    public void LogoClick(View view){
+        closeMenu(menu);
+   }
 
-            case 1:
-
-                Toast.makeText(this, "Show Data Clicked", Toast.LENGTH_SHORT).show();
-                Intent dataIntent = new Intent(this, SensorDataActivity.class);
-                startActivity(dataIntent);
-                return true;
-
-            case 2:
-
-                Toast.makeText(this, "About Clicked", Toast.LENGTH_SHORT).show();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+    public static void closeMenu(DrawerLayout menu) {
+        if(menu.isDrawerOpen(GravityCompat.START)){
+            menu.closeDrawer(GravityCompat.START);
         }
-
     }
+
+    public void MainPageClick(View view){
+        recreate();
+    }
+
+    public void ShowDataClick(View view){
+        showSensorData();
+    }
+
+    public void AboutClick(View view){
+        //About us Aktivität, werde morgen erstellen!
+        Toast.makeText(this,"Über uns-Seite !!!!",Toast.LENGTH_SHORT).show();
+    }
+
+    public void ExitClick(View view){
+        //About us Aktivität, werde morgen erstellen!
+        AlertDialog.Builder warningWindow = new AlertDialog.Builder(RealMainActivity.this);
+        warningWindow.setTitle("Exit");
+        warningWindow.setMessage("Are you sure you want to exit?");
+
+        warningWindow.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finishAffinity();
+                System.exit(0);
+            }
+        });
+
+        warningWindow.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+            }
+        });
+
+        warningWindow.show();
+    }
+
 
     private void setupKinderFunktionen() {
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -120,73 +130,15 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
             public void onClick(View v) {
                 registerSensors();
                 kinderFunktionen();
-                startTimer();
             }
         });
     }
 
     private void kinderFunktionen() {
 
-        if (webView!=null){
-            webView.getSettings().setJavaScriptEnabled(true);
-            webView.addJavascriptInterface(new WebAppInterface(), "Android");
-            webView.setWebViewClient(new WebViewClient() {
-                @Override
-                public void onPageFinished(WebView view, String url) {
-                }
-            });
-
-            String videoUrl = "<html><body><iframe width=\"100%\" " +
-                    "height=\"100%\" src=\"https://www.youtube.com/embed/XcC3IhE9nlQ?autoplay=1\" " +
-                    "frameborder=\"0\" allowfullscreen></iframe></body></html>";
-
-            webView.loadData(videoUrl, "text/html", "utf-8");
-        }
-    }
-
-    private void startTimer() {
-        new CountDownTimer(120000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                timerTextView.setText("Remaining time: " + millisUntilFinished / 1000);
-            }
-
-            @Override
-            public void onFinish() {
-                Log.d("RealMainActivity", "Timer ended");
-                timerTextView.setText("The time is over - Good Job");
-                stopVideo();
-                registerSensors();
-            }
-        }.start();
-    }
-
-    private void stopVideo() {
-        if (webView != null) {
-            webView.post(new Runnable() {
-                @Override
-                public void run() {
-                    webView.evaluateJavascript("(function() { " +
-                            "var iframe = document.querySelector('iframe'); " +
-                            "var video = iframe.contentWindow.document.querySelector('video'); " +
-                            "if (video) { video.pause(); } })();", null);
-                }
-            });
-        }
-    }
-
-    private class WebAppInterface {
-        @JavascriptInterface
-        public void stopVideoFromJava() {
-            stopVideo();
-        }
-    }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (countDownTimer !=null) {
-            countDownTimer.cancel();
-        }
+        String videoUrl = "https://www.youtube.com/embed/wCio_xVlgQ0";
+        playVideo(videoUrl);
+        startTimer();
     }
 
 
@@ -201,11 +153,11 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
     }
 
     private void erwachseneFunktionen() {
-        if (webView!=null){
 
-            webView.loadUrl("https://www.youtube.com/watch?v=XcC3IhE9nlQ");
-        }
-       // startTimer();
+        String videoUrl = "https://www.youtube.com/embed/XcC3IhE9nlQ";
+        playVideo(videoUrl);
+        startTimer();
+
     }
 
     private void setupSeniorFunktionen() {
@@ -219,15 +171,60 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
     }
 
     private void seniorFunktionen() {
-        if (webView!=null){
 
-            webView.loadUrl("https://www.youtube.com/watch?v=XcC3IhE9nlQ");
-        }
-       // startTimer();
+        String videoUrl = "https://www.youtube.com/embed/gAODutgIIVQ&t=20s";
+        playVideo(videoUrl);
+        startTimer();
     }
 
+    private void startTimer() {
+        new CountDownTimer(140000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timerTextView.setText(getString(R.string.remaining_time) + millisUntilFinished / 1000);
+            }
 
+            @Override
+            public void onFinish() {
+                Log.d("RealMainActivity", "Timer ended");
+                timerTextView.setText(getString(R.string.timer_over));
+                stopVideo();
+                registerSensors();
+            }
+        }.start();
+    }
 
+    private void playVideo(String videoUrl) {
+        if (webView != null) {
+
+            webView.getSettings().setJavaScriptEnabled(true);
+            webView.setWebViewClient(new WebViewClient() {
+                @Override
+                public void onPageFinished(WebView view, String url) {
+
+                }
+            });
+
+            String htmlTemplate = "<html><body><iframe width=\"100%\" height=\"100%\" src=\"" + videoUrl +
+                    "?autoplay=1\" frameborder=\"0\" allowfullscreen></iframe></body></html>";
+
+            webView.loadData(htmlTemplate, "text/html", "utf-8");
+        }
+
+    }
+    private void stopVideo() {
+        if (webView != null) {
+            webView.post(new Runnable() {
+                @Override
+                public void run() {
+                    webView.evaluateJavascript("(function() { " +
+                            "var iframe = document.querySelector('iframe'); " +
+                            "var video = iframe.contentWindow.document.querySelector('video'); " +
+                            "if (video) { video.pause(); } })();", null);
+                }
+            });
+        }
+    }
 
     private void registerSensors() {
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
@@ -238,7 +235,8 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         sensorManager.unregisterListener(this);
     }
 
-    private void showSensorData() {
+    public void showSensorData() {
+
         Intent intent = new Intent(this, SensorDataActivity.class);
         intent.putStringArrayListExtra("sensorData", sensorDataList);
         startActivity(intent);
@@ -269,6 +267,8 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
 
     @Override
     protected void onPause() {
+
+        closeMenu(menu);
         super.onPause();
         unregisterSensors();
     }
@@ -278,6 +278,5 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
 
         super.onResume();
     }
-
 
 }
