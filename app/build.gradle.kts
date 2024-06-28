@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.cleansmile"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -53,4 +53,6 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
     */
+
+
 }

@@ -115,11 +115,14 @@ public class StartActivity extends AppCompatActivity {
     public void AboutClick(View view){
         //About us Aktivität, werde ich morgen erstellen!
         Toast.makeText(this,"Über uns-Seite !!!!",Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(StartActivity.this, AddReminder.class);
+        startActivity(intent);
     }
 
     public void ExitClick(View view){
 
-        AlertDialog.Builder warningWindow = new AlertDialog.Builder(StartActivity.this);
+        AlertDialog.Builder warningWindow = new AlertDialog.Builder(StartActivity
+                .this);
         warningWindow.setTitle("Exit");
         warningWindow.setMessage("Are you sure you want to exit?");
 
