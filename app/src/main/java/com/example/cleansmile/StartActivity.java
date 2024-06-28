@@ -22,6 +22,7 @@ import javax.sql.DataSource;
 public class StartActivity extends AppCompatActivity {
     private View contentView;
     DrawerLayout menu;
+    private MyDatabaseHelper myHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +53,15 @@ public class StartActivity extends AppCompatActivity {
         logButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), AlterWaehlenActivity.class);
-                startActivity(intent);
+                boolean corrUser = myHelper.getAllRecords().equals(user) == true;
+                boolean corrPassw = myHelper.getAllRecords().equals(passWord) == true;
+                if(corrUser && corrPassw == true) {
+                    Intent intent = new Intent(getApplicationContext(), AlterWaehlenActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast toast = Toast.makeText(getApplicationContext(), "Wrong password or username", Toast.LENGTH_LONG );
+                    toast.show();
+                }
                 //String logIn = intent.getStringExtra(RealMainActivity.NAME);
             }
         });
@@ -61,6 +69,16 @@ public class StartActivity extends AppCompatActivity {
         newUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boolean newUser = myHelper.getAllRecords().equals(user);
+                boolean userPassw = myHelper.getAllRecords().equals(passWord);
+                if(newUser != true) {
+                    myHelper.addRecord(String.valueOf(newUser));
+                    Intent intent = new Intent(getApplicationContext(), AlterWaehlenActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast toast = Toast.makeText(getApplicationContext(), "User already exists", Toast.LENGTH_LONG );
+                    toast.show();
+                }
 
             }
         });
