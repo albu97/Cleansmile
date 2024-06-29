@@ -1,26 +1,21 @@
 package com.example.cleansmile;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.FileUtils;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -40,10 +35,8 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_real_main);
 
-        menu= findViewById(R.id.background_menu);
-
         Intent intent = getIntent();
-        String holeselektiertesAlter = intent.getStringExtra(AlterWaehlenActivity.NAME);
+        String holeselektiertesAlter=intent.getStringExtra(AlterWaehlenActivity.NAME);
 
         timerTextView = findViewById(R.id.timer_sekunden);
         webView = findViewById(R.id.video_screen);
@@ -267,23 +260,30 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
             Log.d("SensorData", data);
         }
     }
+    public void restart(){
+        TextView timer = findViewById(R.id.timer_sekunden);
+        Button restartB = findViewById(R.id.restartButton);
 
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        restartB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new CountDownTimer(120000, 1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        timer.setText("Remaining time: "+ millisUntilFinished/1000);
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                    }
+                };
+
+            }
+        });
     }
-
-    @Override
-    protected void onPause() {
-
-        closeMenu(menu);
-        super.onPause();
-        unregisterSensors();
-    }
-
-    @Override
-    protected void onResume() {
-
-        super.onResume();
-    }
-
+    public void realMainClass(FileUtils.ProgressListener listener) {
+        this.listener = listener;}
 }

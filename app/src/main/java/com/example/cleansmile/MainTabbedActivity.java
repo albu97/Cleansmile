@@ -9,6 +9,7 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.FileUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.example.cleansmile.databinding.ActivityMainTabbedBinding;
 public class MainTabbedActivity extends AppCompatActivity {
 
     private ActivityMainTabbedBinding binding;
+    private FileUtils.ProgressListener listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,4 +44,6 @@ public class MainTabbedActivity extends AppCompatActivity {
             }
         });
     }
+    public void tabbedClass(FileUtils.ProgressListener listener) {
+        this.listener = listener;}
 }

@@ -9,12 +9,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.os.FileUtils;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 public class ReminderReceiver extends BroadcastReceiver {
     private static final String CHANNEL_ID = "com.example.cleansmile.reminder_channel";
+    private FileUtils.ProgressListener listener;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -48,4 +50,6 @@ public class ReminderReceiver extends BroadcastReceiver {
 
         notificationManager.notify(12345, builder.build());
     }
+    public void reminderReceiverclass(FileUtils.ProgressListener listener) {
+        this.listener = listener;}
 }
