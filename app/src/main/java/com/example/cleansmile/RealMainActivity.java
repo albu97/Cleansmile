@@ -1,13 +1,7 @@
 package com.example.cleansmile;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
-
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.hardware.SensorManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.FileUtils;
@@ -19,14 +13,21 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class RealMainActivity extends AppCompatActivity {
-    private FileUtils.ProgressListener listener;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
-    public static void openMenu(DrawerLayout menu) {
-    }
+import java.util.ArrayList;
 
-    public static void closeMenu(DrawerLayout menu) {
-    }
+public class RealMainActivity extends AppCompatActivity implements SensorEventListener {
+
+    DrawerLayout menu;
+    private SensorManager sensorManager;
+    private Sensor accelerometer;
+    private Sensor gyroscope;
+    private TextView timerTextView;
+    private WebView webView;
+    private Button startButton;
+    private static ArrayList<String> sensorDataList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,200 +35,250 @@ public class RealMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_real_main);
 
         Intent intent = getIntent();
-
         String holeselektiertesAlter=intent.getStringExtra(AlterWaehlenActivity.NAME);
 
+        timerTextView = findViewById(R.id.timer_sekunden);
+        webView = findViewById(R.id.video_screen);
+        startButton = findViewById(R.id.zaehne_Putzen);
 
-            switch (holeselektiertesAlter){
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 
-                case "3-12":
 
-                    setupKinderFunktionen();
-                    break;
-
-                case "13-50":
-                    setupErwachseneFunktionen();
-                    break;
-
-                case "50+":
-                    setupSeniorFunktionen();
-                    break;
-      }
-
-    }
-
-    public void setupKinderFunktionen(){
-
-        TextView timerTextView = findViewById(R.id.timer_sekunden);
-        WebView videoView = findViewById(R.id.video_screen);
-        Button startButton = findViewById(R.id.zaehne_Putzen);
-
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                kinderFunktionen(timerTextView,videoView);
-            }
-        });
-
-    }
-
-    public void kinderFunktionen(TextView timerTextView, WebView videoView){
-
-        //+ Foto hinzufügen
-
-        //wichtig: WebView to load a YouTube video
-        WebSettings webSettings = videoView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        switch (holeselektiertesAlter) {
+            case "3-12":
+                setupKinderFunktionen();
+                break;
+            case "13-50":
+                setupErwachseneFunktionen();
+                break;
+            case "50+":
+                setupSeniorFunktionen();
+                break;
         }
-
-        videoView.setWebViewClient(new WebViewClient());
-
-        String videoUrl = "https://www.youtube.com/watch?v=XcC3IhE9nlQ";
-        //videoView.loadUrl(videoUrl);
-        String html = "<html><body><iframe width=\"100%\" height=\"100%\" src=\"" + videoUrl + "\" frameborder=\"0\" allowfullscreen></iframe></body></html>";
-        videoView.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
-
-
-        new CountDownTimer(120000,1000){
-
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-                timerTextView.setText("Remaining time: " + millisUntilFinished/1000);
-            }
-            @Override
-            public void onFinish() {
-
-                Log.d("RealMainActivity", "Timer ended");
-                timerTextView.setText("The time is over - Good Job");
-            }
-        }.start();
-
-       /* String video= "android.resource://" + getPackageName() + "/" + R.raw.brush_your_teeth;
-        Uri uri = Uri.parse(video);
-        videoView.setVideoURI(uri);
-        videoView.start(); */
-
     }
 
-    public void setupErwachseneFunktionen(){
-
-        TextView timerTextView = findViewById(R.id.timer_sekunden);
-        WebView videoView = findViewById(R.id.video_screen);
-        Button startButton = findViewById(R.id.zaehne_Putzen);
-
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                erwachseneFunktionen(timerTextView,videoView);
-            }
-        });
-
+    public void ClickOnMenu(View view){
+        openMenu(menu);
     }
 
-    public void erwachseneFunktionen(TextView timerTextView, WebView videoView){
-
-        //+ Foto hinzufügen
-        getWindow().getDecorView().setBackgroundColor(Color.GREEN);
-
-        //wichtig: WebView to load a YouTube video
-        WebSettings webSettings = videoView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        videoView.setWebViewClient(new WebViewClient());
-        String videoUrl = "https://www.youtube.com/watch?v=XcC3IhE9nlQ";
-        videoView.loadUrl(videoUrl);
-
-        new CountDownTimer(120000,1000){
-
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-                timerTextView.setText("Verbleibende Sekunden: " + millisUntilFinished/1000);
-            }
-
-            @Override
-            public void onFinish() {
-
-                Log.d("RealMainActivity", "Timer beendet");
-                timerTextView.setText("Die Zeit ist vorbei");
-
-            }
-
-        }.start();
-
-      /*  String video= "android.resource://" + getPackageName() + "/" + R.raw.brush_your_teeth;
-        Uri uri = Uri.parse(video);
-        videoView.setVideoURI(uri);
-        videoView.start();*/
-//chabge
-
+    public static void openMenu(DrawerLayout menu) {
+        menu.openDrawer(GravityCompat.START);
     }
 
-
-   public void setupSeniorFunktionen(){
-
-       TextView timerTextView = findViewById(R.id.timer_sekunden);
-       WebView videoView = findViewById(R.id.video_screen);
-       Button startButton = findViewById(R.id.zaehne_Putzen);
-
-       startButton.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-
-               seniorFunktionen(timerTextView, videoView);
-           }
-       });
-
-
+    public void LogoClick(View view){
+        closeMenu(menu);
    }
 
-    public void seniorFunktionen(TextView timerTextView,WebView videoView){
+    public static void closeMenu(DrawerLayout menu) {
+        if(menu.isDrawerOpen(GravityCompat.START)){
+            menu.closeDrawer(GravityCompat.START);
+        }
+    }
 
-        getWindow().getDecorView().setBackgroundColor(Color.LTGRAY);
+    public void MainPageClick(View view){
+        recreate();
+    }
+
+    public void ShowDataClick(View view){
+        Intent intent = new Intent(this,SensorDataActivity.class);
+        startActivity(intent);
+        //showSensorData();
+    }
+
+    public void SetReminderClick(View view){
+        Intent intent = new Intent(this, AddReminder.class);
+        startActivity(intent);
+    }
+
+    public void AboutClick(View view){
+        //About us Aktivität, werde morgen erstellen!
+        Toast.makeText(this,"Über uns-Seite !!!!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void ExitClick(View view){
+        //About us Aktivität, werde morgen erstellen!
+        AlertDialog.Builder warningWindow = new AlertDialog.Builder(RealMainActivity.this);
+        warningWindow.setTitle("Exit");
+        warningWindow.setMessage("Are you sure you want to exit?");
+
+        warningWindow.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finishAffinity();
+                System.exit(0);
+            }
+        });
+
+        warningWindow.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+            }
+        });
+
+        warningWindow.show();
+    }
 
 
-        //wichtig: WebView to load a YouTube video
-        WebSettings webSettings = videoView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        videoView.setWebViewClient(new WebViewClient());
-        String videoUrl = "https://www.youtube.com/watch?v=XcC3IhE9nlQ";
-        videoView.loadUrl(videoUrl);
+    private void setupKinderFunktionen() {
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                registerSensors();
+                kinderFunktionen();
+            }
+        });
+    }
 
-        new CountDownTimer(120000,1000){
+    private void kinderFunktionen() {
+
+        String videoUrl = "https://www.youtube.com/embed/wCio_xVlgQ0";
+        playVideo(videoUrl);
+        startTimer();
+    }
 
 
+    private void setupErwachseneFunktionen() {
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                registerSensors();
+                erwachseneFunktionen();
+            }
+        });
+    }
+
+    private void erwachseneFunktionen() {
+
+        String videoUrl = "https://www.youtube.com/embed/XcC3IhE9nlQ";
+        playVideo(videoUrl);
+        startTimer();
+
+    }
+
+    private void setupSeniorFunktionen() {
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                registerSensors();
+                seniorFunktionen();
+            }
+        });
+    }
+
+    private void seniorFunktionen() {
+
+        String videoUrl = "https://www.youtube.com/embed/gAODutgIIVQ&t=20s";
+        playVideo(videoUrl);
+        startTimer();
+    }
+
+    private void startTimer() {
+        new CountDownTimer(140000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-
-                timerTextView.setText("Verbleibende Sekunden: " + millisUntilFinished/1000);
-
+                timerTextView.setText(getString(R.string.remaining_time) + millisUntilFinished / 1000);
             }
 
             @Override
             public void onFinish() {
-
-                Log.d("RealMainActivity", "Timer beendet");
-                timerTextView.setText("Die Zeit ist vorbei");
-
+                Log.d("RealMainActivity", "Timer ended");
+                timerTextView.setText(getString(R.string.timer_over));
+                stopVideo();
+                registerSensors();
             }
         }.start();
+    }
 
-      /*  String video= "android.resource://" + getPackageName() + "/" + R.raw.brush_your_teeth;
-        Uri uri = Uri.parse(video);
-        videoView.setVideoURI(uri);
-        videoView.start();*/
+    private void playVideo(String videoUrl) {
+        if (webView != null) {
 
+            webView.getSettings().setJavaScriptEnabled(true);
+            webView.setWebViewClient(new WebViewClient() {
+                @Override
+                public void onPageFinished(WebView view, String url) {
 
-        //Link hinzufügen
-        //https://developer.android.com/studio/write/app-link-indexing?hl=de
+                }
+            });
 
+            String htmlTemplate = "<html><body><iframe width=\"100%\" height=\"100%\" src=\"" + videoUrl +
+                    "?autoplay=1\" frameborder=\"0\" allowfullscreen></iframe></body></html>";
+
+            webView.loadData(htmlTemplate, "text/html", "utf-8");
+        }
 
     }
+    private void stopVideo() {
+        if (webView != null) {
+            webView.post(new Runnable() {
+                @Override
+                public void run() {
+                    webView.evaluateJavascript("(function() { " +
+                            "var iframe = document.querySelector('iframe'); " +
+                            "var video = iframe.contentWindow.document.querySelector('video'); " +
+                            "if (video) { video.pause(); } })();", null);
+                }
+            });
+        }
+    }
+
+    private void registerSensors() {
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    private void unregisterSensors() {
+        sensorManager.unregisterListener(this);
+    }
+
+    public void showSensorData() {
+
+        Intent intent = new Intent(this, SensorDataActivity.class);
+        intent.putStringArrayListExtra("sensorData", sensorDataList);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+            String data = "Accel - X: " + x + ", Y: " + y + ", Z: " + z;
+            sensorDataList.add(data);
+            Log.d("SensorData", data);
+        } else if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+            String data = "Gyro - X: " + x + ", Y: " + y + ", Z: " + z;
+            sensorDataList.add(data);
+            Log.d("SensorData", data);
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
+
+    @Override
+    protected void onPause() {
+
+        closeMenu(menu);
+        super.onPause();
+        unregisterSensors();
+    }
+
+    @Override
+    protected void onResume() {
+
+        super.onResume();
+    }
+
+
     public void restart(){
         TextView timer = findViewById(R.id.timer_sekunden);
         Button restartB = findViewById(R.id.restartButton);
@@ -256,3 +307,4 @@ public class RealMainActivity extends AppCompatActivity {
         this.listener = listener;}
 
 }
+

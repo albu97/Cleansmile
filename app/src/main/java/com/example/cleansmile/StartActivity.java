@@ -130,6 +130,11 @@ public class StartActivity extends AppCompatActivity {
 
     }
 
+    public void SetReminderClick(View view){
+        Intent intent = new Intent(this, AddReminder.class);
+        startActivity(intent);
+    }
+
     public void AboutClick(View view){
         //About us Aktivität, werde ich morgen erstellen!
         Toast.makeText(this,"Über uns-Seite !!!!",Toast.LENGTH_SHORT).show();

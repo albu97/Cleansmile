@@ -1,13 +1,17 @@
 package com.example.cleansmile;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -23,6 +27,7 @@ import java.util.Calendar;
 
 public class AddReminder extends AppCompatActivity {
 
+    DrawerLayout menu;
     private TimePicker timePicker;
     private EditText messageEditText;
     private Button reminderButton;
@@ -61,7 +66,7 @@ public class AddReminder extends AppCompatActivity {
 
                 alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, getTriggerTime(hour, minute), AlarmManager.INTERVAL_DAY, pendingIntent);
 
-                Toast.makeText(AddReminder.this, "Reminder set for " + hour + ":" + minute, Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddReminder.this, R.string.reminder_set + hour + ":" + minute, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -94,12 +99,72 @@ public class AddReminder extends AppCompatActivity {
 
                 alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, getTriggerTime(hour, minute), AlarmManager.INTERVAL_DAY, pendingIntent);
 
-                Toast.makeText(AddReminder.this, "Reminder set for " + hour + ":" + minute, Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddReminder.this, R.string.reminder_set + hour + ":" + minute, Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.permission_denied, Toast.LENGTH_SHORT).show();
             }
         }
     }
-    public void addReminderclass(FileUtils.ProgressListener listener) {
-        this.listener = listener;}
+
+    public void ClickOnMenu(View view){
+        openMenu(menu);
+    }
+
+    public static void openMenu(DrawerLayout menu) {
+        menu.openDrawer(GravityCompat.START);
+    }
+
+    public void LogoClick(View view){
+        closeMenu(menu);
+    }
+
+    public static void closeMenu(DrawerLayout menu) {
+        if(menu.isDrawerOpen(GravityCompat.START)){
+            menu.closeDrawer(GravityCompat.START);
+        }
+    }
+
+    public void MainPageClick(View view){
+        recreate();
+    }
+
+    public void ShowDataClick(View view){
+       //showSensorData();
+    }
+
+    public void SetReminderClick(View view){
+        Intent intent = new Intent(this, AddReminder.class);
+        startActivity(intent);
+    }
+
+    public void AboutClick(View view){
+        //About us Aktivität, werde morgen erstellen!
+        Toast.makeText(this,"Über uns-Seite !!!!",Toast.LENGTH_SHORT).show();
+    }
+
+    public void ExitClick(View view){
+        //About us Aktivität, werde morgen erstellen!
+        AlertDialog.Builder warningWindow = new AlertDialog.Builder(AddReminder.this);
+        warningWindow.setTitle("Exit");
+        warningWindow.setMessage("Are you sure you want to exit?");
+
+        warningWindow.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finishAffinity();
+                System.exit(0);
+            }
+        });
+
+        warningWindow.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+            }
+        });
+
+        warningWindow.show();
+    }
+
 }
