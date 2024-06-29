@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.FileUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,7 +26,7 @@ public class AddReminder extends AppCompatActivity {
     private TimePicker timePicker;
     private EditText messageEditText;
     private Button reminderButton;
-
+    private FileUtils.ProgressListener listener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,4 +100,6 @@ public class AddReminder extends AppCompatActivity {
             }
         }
     }
+    public void addReminderclass(FileUtils.ProgressListener listener) {
+        this.listener = listener;}
 }

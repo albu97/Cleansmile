@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.FileUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -14,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class AlterWaehlenActivity extends AppCompatActivity {
     public static final String NAME ="com.example.cleansmile.extra.NAME";
+    private FileUtils.ProgressListener listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,4 +56,6 @@ public class AlterWaehlenActivity extends AppCompatActivity {
         });
 
     }
+    public void ageClass(FileUtils.ProgressListener listener) {
+        this.listener = listener;}
 }

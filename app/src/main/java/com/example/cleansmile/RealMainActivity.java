@@ -1,12 +1,14 @@
 package com.example.cleansmile;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.FileUtils;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -16,6 +18,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class RealMainActivity extends AppCompatActivity {
+    private FileUtils.ProgressListener listener;
+
+    public static void openMenu(DrawerLayout menu) {
+    }
+
+    public static void closeMenu(DrawerLayout menu) {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -241,4 +250,6 @@ public class RealMainActivity extends AppCompatActivity {
             }
         });
     }
+    public void realMainClass(FileUtils.ProgressListener listener) {
+        this.listener = listener;}
 }

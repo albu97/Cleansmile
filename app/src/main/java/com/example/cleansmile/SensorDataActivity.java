@@ -3,13 +3,14 @@ package com.example.cleansmile;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.FileUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
 public class SensorDataActivity extends AppCompatActivity {
-
+    private FileUtils.ProgressListener listener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,4 +23,6 @@ public class SensorDataActivity extends AppCompatActivity {
         sensorDataListView.setAdapter(adapter);
 
     }
+    public void sensorActivclass(FileUtils.ProgressListener listener) {
+        this.listener = listener;}
 }

@@ -70,7 +70,7 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boolean newUser = myHelper.getAllRecords().equals(user);
-                boolean userPassw = myHelper.getAllRecords().equals(passWord);
+                //boolean userPassw = myHelper.getAllRecords().equals(passWord);
                 if(newUser != true) {
                     myHelper.addRecord(String.valueOf(newUser));
                     Intent intent = new Intent(getApplicationContext(), AlterWaehlenActivity.class);
@@ -162,5 +162,6 @@ public class StartActivity extends AppCompatActivity {
 
         warningWindow.show();
     }
+
 
 }
