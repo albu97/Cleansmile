@@ -106,4 +106,5 @@
         <include
             layout="@layout/menu_inhalt"/>
     </RelativeLayout>
+
 </androidx.drawerlayout.widget.DrawerLayout>

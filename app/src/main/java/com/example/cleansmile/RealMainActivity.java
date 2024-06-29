@@ -1,7 +1,13 @@
 package com.example.cleansmile;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.FileUtils;
@@ -12,8 +18,11 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import java.util.ArrayList;
@@ -28,11 +37,17 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
     private WebView webView;
     private Button startButton;
     private static ArrayList<String> sensorDataList = new ArrayList<>();
+    private FileUtils.ProgressListener listener;
+
+    private SensorCamera sensorCamera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_real_main);
+
+        sensorCamera = new SensorCamera(this);
+        sensorCamera.requestPermissions();
 
         Intent intent = getIntent();
         String holeselektiertesAlter=intent.getStringExtra(AlterWaehlenActivity.NAME);
