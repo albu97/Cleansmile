@@ -1,10 +1,18 @@
 package com.example.cleansmile;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -16,6 +24,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -95,7 +104,7 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
 
     public void AboutClick(View view){
         //About us Aktivität, werde morgen erstellen!
-        Toast.makeText(this,"Über uns-Seite !!!!",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"Über uns-Seite !!!!", Toast.LENGTH_SHORT).show();
     }
 
     public void ExitClick(View view){
@@ -260,6 +269,26 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
             Log.d("SensorData", data);
         }
     }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
+
+    @Override
+    protected void onPause() {
+
+        closeMenu(menu);
+        super.onPause();
+        unregisterSensors();
+    }
+
+    @Override
+    protected void onResume() {
+
+        super.onResume();
+    }
+
+
     public void restart(){
         TextView timer = findViewById(R.id.timer_sekunden);
         Button restartB = findViewById(R.id.restartButton);
@@ -284,6 +313,6 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
             }
         });
     }
-    public void realMainClass(FileUtils.ProgressListener listener) {
-        this.listener = listener;}
+
 }
+
