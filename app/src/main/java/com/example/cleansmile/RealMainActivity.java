@@ -3,8 +3,10 @@ package com.example.cleansmile;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -252,4 +254,5 @@ public class RealMainActivity extends AppCompatActivity {
     }
     public void realMainClass(FileUtils.ProgressListener listener) {
         this.listener = listener;}
+
 }
