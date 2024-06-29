@@ -33,7 +33,7 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
     private TextView timerTextView;
     private WebView webView;
     private Button startButton;
-    private ArrayList<String> sensorDataList = new ArrayList<>();
+    private static ArrayList<String> sensorDataList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +90,14 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
     }
 
     public void ShowDataClick(View view){
-        showSensorData();
+        Intent intent = new Intent(this,SensorDataActivity.class);
+        startActivity(intent);
+        //showSensorData();
+    }
+
+    public void SetReminderClick(View view){
+        Intent intent = new Intent(this, AddReminder.class);
+        startActivity(intent);
     }
 
     public void AboutClick(View view){

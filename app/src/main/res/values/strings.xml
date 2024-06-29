@@ -65,4 +65,15 @@
     <string name="show_data">Show Data</string>
     <string name="show_about">About</string>
 
+    <!-- ReminderReceiver strings -->
+    <string name="reminder_channel_name">Reminder Channel</string>
+    <string name="reminder_channel_description">Channel for reminder notifications</string>
+    <string name="notification_title">Time to brush your teeth!</string>
+
+    <!-- AddReminder activity strings -->
+    <string name="permission_denied">Permission denied</string>
+    <string name="reminder_set">Reminder set for %1$d:%2$d</string>
+    <string name="set_reminder_button">Set Reminder</string>
+    <string name="message_hint">Enter your reminder message</string>
+
 </resources>

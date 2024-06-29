@@ -9,7 +9,8 @@
         android:layout_height="120dp"
         android:layout_margin="16dp"
         android:onClick="LogoClick"
-        android:src="@drawable/baseline_apps_24"/>
+        android:background="@drawable/gradient_button"
+        android:src="@mipmap/logo_end"/>
     
     <View
         android:layout_width="match_parent"
@@ -70,6 +71,30 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:onClick="SetReminderClick">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Set Reminder"
+            android:textSize="20sp"
+            android:layout_marginStart="16dp"
+            android:padding="12dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/baseline_circle_notifications_24"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:onClick="AboutClick">
 
         <TextView
@@ -82,10 +107,10 @@
             android:padding="12dp"/>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:src="@drawable/baseline_dashboard_24"/>
+            android:layout_width="46dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="11dp"
+            android:src="@drawable/info_icon_foreground" />
 
     </LinearLayout>
 
