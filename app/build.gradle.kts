@@ -36,13 +36,6 @@ android {
 
 dependencies {
 
-        def camerax_version = "2.0.0-beta07"
-        implementation "androidx.camera:camera-core:${camerax_version}"
-        implementation "androidx.camera:camera-camera2:$camerax_version"
-        implementation "androidx.camera:camera-lifecycle:$camerax_version"
-        implementation "androidx.camera:camera-view:1.0.0-alpha24"
-        implementation "androidx.camera:camera-extensions:1.0.0-alpha24“
-
 
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
