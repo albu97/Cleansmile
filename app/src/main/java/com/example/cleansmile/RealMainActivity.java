@@ -156,6 +156,7 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         String videoUrl = "https://www.youtube.com/embed/wCio_xVlgQ0";
         playVideo(videoUrl);
         startTimer();
+        restart();
     }
 
     private void setupErwachseneFunktionen() {
@@ -173,6 +174,7 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         String videoUrl = "https://www.youtube.com/embed/XcC3IhE9nlQ";
         playVideo(videoUrl);
         startTimer();
+        restart();
 
     }
 
@@ -191,10 +193,12 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         String videoUrl = "https://www.youtube.com/embed/gAODutgIIVQ&t=20s";
         playVideo(videoUrl);
         startTimer();
+        restart();
     }
 
     private void startTimer() {
-        new CountDownTimer(140000, 1000) {
+        Button reButton = findViewById(R.id.restartButton);
+        CountDownTimer countDown = new CountDownTimer(140000, 1000) {
             @SuppressLint("SetTextI18n")
             @Override
             public void onTick(long millisUntilFinished) {
@@ -209,7 +213,12 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
                 registerSensors();
             }
         }.start();
+        boolean clicked = reButton.isClickable();
+        if(clicked){
+            stopTimer(countDown);
+        restart();}
     }
+
 
     @SuppressLint("SetJavaScriptEnabled")
     private void playVideo(String videoUrl) {
@@ -298,26 +307,30 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
     public void restart(){
         TextView timer = findViewById(R.id.timer_sekunden);
         Button restartB = findViewById(R.id.restartButton);
-
         restartB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 new CountDownTimer(120000, 1000) {
                     @Override
                     public void onTick(long millisUntilFinished) {
                         timer.setText("Remaining time: "+ millisUntilFinished/1000);
-
                     }
-
                     @Override
                     public void onFinish() {
-
                     }
-                };
+                };onStart();
             }
-        });onStart();
+        });
     }
+
+    public void stopTimer(CountDownTimer countDown){
+
+        if (countDown != null) {
+
+            countDown.cancel();
+        }
+    }
+
     public void realMainClass(FileUtils.ProgressListener listener) {
     }
 }
