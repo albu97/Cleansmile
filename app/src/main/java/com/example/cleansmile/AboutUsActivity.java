@@ -61,7 +61,7 @@ public class AboutUsActivity extends AppCompatActivity {
     }
 
     public void AboutClick(View view){
-        //About us Aktivität, werde morgen erstellen!
+
         Toast.makeText(this,"Über uns-Seite !!!!", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this,AboutUsActivity.class);
         startActivity(intent);

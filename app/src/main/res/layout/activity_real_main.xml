@@ -57,12 +57,12 @@
             android:textStyle="bold"/>
 
         <Button
-            android:id="@+id/restartButton"
+            android:id="@+id/resumeButton"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/round_button"
-            android:text="@string/restart"
+            android:text="@string/resume"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold"/>

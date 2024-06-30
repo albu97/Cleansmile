@@ -30,21 +30,27 @@ import java.util.Objects;
 public class RealMainActivity extends AppCompatActivity implements SensorEventListener {
 
     public static final String NAME = "com.example.cleansmile.extra.NAME";
-    Button stopButton = findViewById(R.id.stopButton);
-    Button restartB = findViewById(R.id.restartButton);
     DrawerLayout menu;
     private SensorManager sensorManager;
     private Sensor accelerometer;
     private Sensor gyroscope;
     private TextView timerTextView;
     private WebView webView;
+
+    private CountDownTimer countDown;
     private Button startButton;
+
+    private Button stopButton;
+    private Button resumeB;
+    private long timeRemaining;
+
     private static final ArrayList<String> sensorDataList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_real_main);
+
 
         SensorCamera sensorCamera = new SensorCamera(this);
         sensorCamera.requestPermissions();
@@ -55,6 +61,8 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         timerTextView = findViewById(R.id.timer_sekunden);
         webView = findViewById(R.id.video_screen);
         startButton = findViewById(R.id.zaehne_Putzen);
+        stopButton=findViewById(R.id.stopButton);
+        resumeB=findViewById(R.id.resumeButton);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -63,7 +71,7 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         menu = findViewById(R.id.background_menu);
 
 
-        switch (Objects.requireNonNull(holeselektiertesAlter)) {
+        switch (holeselektiertesAlter) {
             case "3-12":
                 setupKinderFunktionen();
                 break;
@@ -75,7 +83,6 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
                 break;
         }
     }
-
     public void ClickOnMenu(View view) {
         RealMainActivity.openMenu(menu);
     }
@@ -110,14 +117,12 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
     }
 
     public void AboutClick(View view) {
-        //About us Aktivität, werde morgen erstellen!
         Toast.makeText(this, "Über uns-Seite !!!!", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, AboutUsActivity.class);
         startActivity(intent);
     }
 
     public void ExitClick(View view) {
-        //About us Aktivität, werde morgen erstellen!
         AlertDialog.Builder warningWindow = new AlertDialog.Builder(RealMainActivity.this);
         warningWindow.setTitle("Exit");
         warningWindow.setMessage("Are you sure you want to exit?");
@@ -141,13 +146,28 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         warningWindow.show();
     }
 
-
     private void setupKinderFunktionen() {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("KinderFunktionen", "Start Button clicked");
                 registerSensors();
                 kinderFunktionen();
+            }
+        });
+        stopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("KinderFunktionen", "Stop Button clicked");
+                stopTimer();
+            }
+        });
+        resumeB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("KinderFunktionen", "Resume Button clicked");
+                resumeTimer();
+                registerSensors();
             }
         });
     }
@@ -156,15 +176,31 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
 
         String videoUrl = "https://www.youtube.com/embed/wCio_xVlgQ0";
         playVideo(videoUrl);
-        startTimer();
+        startTimer(140000);
     }
 
     private void setupErwachseneFunktionen() {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("ErwachseneFunktionen", "Start Button clicked");
                 registerSensors();
                 erwachseneFunktionen();
+            }
+        });
+        stopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("ErwachseneFunktionen", "Stop Button clicked");
+                stopTimer();
+            }
+        });
+        resumeB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("ErwachseneFunktionen", "Resume Button clicked");
+                resumeTimer();
+                registerSensors();
             }
         });
     }
@@ -173,15 +209,31 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
 
         String videoUrl = "https://www.youtube.com/embed/XcC3IhE9nlQ";
         playVideo(videoUrl);
-        startTimer();
+        startTimer(140000);
     }
 
     private void setupSeniorFunktionen() {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("SeniorFunktionen", "Start Button clicked");
                 registerSensors();
                 seniorFunktionen();
+            }
+        });
+        stopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("SeniorFunktionen", "Stop Button clicked");
+                stopTimer();
+            }
+        });
+        resumeB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("SeniorFunktionen", "Resume Button clicked");
+                resumeTimer();
+                registerSensors();
             }
         });
     }
@@ -190,42 +242,42 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
 
         String videoUrl = "https://www.youtube.com/embed/gAODutgIIVQ&t=20s";
         playVideo(videoUrl);
-        startTimer();
+        startTimer(140000);
     }
 
-    private void startTimer() {
+    private void startTimer(long duration) {
 
-        CountDownTimer countDown = new CountDownTimer(140000, 1000) {
-            @SuppressLint("SetTextI18n")
+        countDown = new CountDownTimer(duration, 1000) {
+
             @Override
             public void onTick(long millisUntilFinished) {
+                timeRemaining = millisUntilFinished;
                 timerTextView.setText(getString(R.string.remaining_time) + millisUntilFinished / 1000);
             }
 
             @Override
             public void onFinish() {
+                stopVideo();
                 Log.d("RealMainActivity", "Timer ended");
                 timerTextView.setText(getString(R.string.timer_over));
-                stopVideo();
                 registerSensors();
+
             }
         }.start();
-        restartB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                restart();
-            }
-        });
-        stopButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pauseTimer(countDown);
-            }
-        });
+    }
+
+    public void stopTimer() {
+        if (countDown != null) {
+            countDown.cancel();
+        }
+    }
+
+    public void resumeTimer(){
+        startTimer(timeRemaining);
+        registerSensors();
     }
 
 
-    @SuppressLint("SetJavaScriptEnabled")
     private void playVideo(String videoUrl) {
         if (webView != null) {
 
@@ -309,32 +361,6 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         super.onResume();
     }
 
-    public void restart() {
-        new CountDownTimer(140000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                timerTextView.setText("Remaining time: " + millisUntilFinished / 1000);
-            }
-
-            @Override
-            public void onFinish() {
-            }
-        };
-        onStart();
-
-    }
-
-    public void stopTimer(CountDownTimer countDown) {
-        if (countDown != null) {
-            countDown.cancel();
-        }
-    }
-
-    public void pauseTimer(CountDownTimer cdt) {
-        cdt.cancel();
-        String sec = (String) timerTextView.getText();
-        timerTextView.setText(getString(R.string.remaining_time) + sec);
-    }
 
     public void realMainClass(FileUtils.ProgressListener listener) {
     }

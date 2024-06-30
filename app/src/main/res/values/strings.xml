@@ -7,7 +7,7 @@
         <item>13-50</item>
         <item>50+</item>
     </string-array>
-    <string name="restart">Restart</string>
+    <string name="resume">Resume</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>
     <string name="timer_over">The time is over - Good Job</string>

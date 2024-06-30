@@ -83,7 +83,9 @@ public class SensorCamera {
             @NonNull Executor executor,
             @NonNull ImageCapture.OnImageSavedCallback imageSavedCallback
     ) {
-        }
+    }
+
+       /*
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,5 +106,5 @@ public class SensorCamera {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             imageView.setImageBitmap(photo);
         }
-    }
+    }*/
 }
