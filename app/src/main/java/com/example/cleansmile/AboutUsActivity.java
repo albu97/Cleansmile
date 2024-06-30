@@ -61,19 +61,18 @@ public class AboutUsActivity extends AppCompatActivity {
     }
 
     public void AboutClick(View view){
-        //About us Aktivität, werde morgen erstellen!
-        Toast.makeText(this,"Über uns-Seite !!!!", Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(this,getString(R.string.about_us_toast), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this,AboutUsActivity.class);
         startActivity(intent);
     }
 
     public void ExitClick(View view){
-        //About us Aktivität, werde morgen erstellen!
         AlertDialog.Builder warningWindow = new AlertDialog.Builder(AboutUsActivity.this);
-        warningWindow.setTitle("Exit");
-        warningWindow.setMessage("Are you sure you want to exit?");
+        warningWindow.setTitle(R.string.exit_title);
+        warningWindow.setMessage(R.string.exit_message);
 
-        warningWindow.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        warningWindow.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 finishAffinity();
@@ -81,7 +80,7 @@ public class AboutUsActivity extends AppCompatActivity {
             }
         });
 
-        warningWindow.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        warningWindow.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 

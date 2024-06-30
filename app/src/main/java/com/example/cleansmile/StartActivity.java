@@ -59,7 +59,7 @@ public class StartActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), AlterWaehlenActivity.class);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Wrong password or username", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.wrong_pass_name, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -76,7 +76,7 @@ public class StartActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), AlterWaehlenActivity.class);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(getApplicationContext(), "User already exists", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.user_exists, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -131,9 +131,9 @@ public class StartActivity extends AppCompatActivity {
     }
 
     public void AboutClick(View view) {
-        Toast.makeText(this, "Über uns-Seite !!!!", Toast.LENGTH_SHORT).show();
-        //Intent intent = new Intent(StartActivity.this, AddReminder.class);
-       // startActivity(intent);
+        Toast.makeText(this, R.string.about_us_toast, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(StartActivity.this, AboutUsActivity.class);
+        startActivity(intent);
     }
 
     public void ExitClick(View view) {

@@ -35,7 +35,9 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/about_us_text"
-            android:textSize="18sp" />
+            android:textSize="20sp"
+            android:textColor="@color/white"/>
+
 
         </ScrollView>
 
