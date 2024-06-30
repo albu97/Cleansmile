@@ -12,6 +12,7 @@
     <string name="stop">Stop</string>
     <string name="timer_over">The time is over - Good Job</string>
     <string name="remaining_time">Remaining time: </string>
+    <string name="start_time">140</string>
 
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
@@ -19,6 +20,7 @@
     <string name="adult">13-50</string>
     <string name="senior">50+</string>
     <string name="title_activity_sensor_data">SensorDataActivity</string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -27,8 +29,12 @@
     <string name="menu_description">Menu</string>
 
     <string name="show_data">Show Data</string>
-    <string name="show_about">About</string>
 
+    <!-- AlterWählen strings -->
+    <string name="select_age">Please select your age!</string>
+    <string name="age">Please select your age!</string>
+    <string name="activity_name">AlterWaehlenActivity</string>
+    <string name="confirm_text">Confirm</string>
     <!-- ReminderReceiver strings -->
     <string name="reminder_channel_name">Reminder Channel</string>
     <string name="reminder_channel_description">Channel for reminder notifications</string>
@@ -36,7 +42,7 @@
 
     <!-- AddReminder activity strings -->
     <string name="permission_denied">Permission denied</string>
-    <string name="reminder_set">Reminder set for %1$d:%2$d</string>
+    <string name="reminder_set">Reminder set for </string>
     <string name="set_reminder_button">Set Reminder</string>
     <string name="message_hint">Enter your reminder message</string>
 
@@ -44,29 +50,41 @@
     <string name="log_in_toast">You have to log in!</string>
     <string name="wrong_pass_name">Wrong password or username</string>
     <string name="user_exists">User already exists</string>
-    <string name="about_us_toast">Über uns-Seite !!!!</string>
+    <string name="about_us_toast">About us</string>
     <string name="exit_title">Exit</string>
     <string name="exit_message">Are you sure you want to exit?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <!-- MyDatabaseHelper -->
+    <string name="table_name">users</string>
+    <string name="column_id">id</string>
+    <string name="column_username">username</string>
+    <string name="column_password">password</string>
+    <string name="database_name">"mydatabase.db"</string>
 
-    <string name="about_us_text">
-        CleanSmile ist eine innovative mobile App, die darauf abzielt, die Zahnpflege zu optimieren und die Mundgesundheit zu verbessern.<br/>
+    <!-- Log tags für KinderFunktionen -->
+    <string name="log_kinder_sta_b_click">Start Button clicked (KinderFunktionen)</string>
+    <string name="log_kinder_sto_b_click">Stop Button clicked (KinderFunktionen)</string>
+    <string name="log_kinder_res_b_click">Resume Button clicked (KinderFunktionen)</string>
 
-        <p> Unsere App bietet eine Vielzahl von Funktionen, um Benutzern ein umfassendes und personalisiertes Zahnpflegeerlebnis zu bieten.</p>
+    <!-- Log tags für ErwachseneFunktionen -->
+    <string name="log_erwachs_sta_b_click">Start Button clicked (ErwachseneFunktionen)</string>
+    <string name="log_erwachs_sto_b_click">Stop Button clicked (ErwachseneFunktionen)</string>
+    <string name="log_erwachs_res_b_click">Resume Button clicked (ErwachseneFunktionen)</string>
 
- <b> Timer und Erinnerungen und Anpassbare Putzpläne:</b><br/>
-Die App verfügt über einen Timer für die empfohlene Putzzeit von 2 Minuten und sendet Erinnerungen, um Benutzer zweimal täglich zum Zähneputzen zu motivieren. Zudem können Benutzer ihre eigenen Putzpläne erstellen, die auf spezifischen Bedürfnissen basieren, wie z.B. Zahnspangen oder Zahnfleischerkrankungen.
+    <!-- Log tags für SeniorenFunktionen -->
+    <string name="log_senior_sta_b_click">Start Button clicked (ErwachseneFunktionen)</string>
+    <string name="log_senior_sto_b_click">Stop Button clicked (ErwachseneFunktionen)</string>
+    <string name="log_senior_res_b_click">Resume Button clicked (ErwachseneFunktionen)</string>
 
-<b>Interaktive Anleitungen und Zahnarzttermine:</b><br/>
-Interaktive Anleitungen sind ebenfalls verfügbar, um Benutzern zu helfen, die richtige Putztechnik zu erlernen und Fehler zu vermeiden. Zudem ermöglicht die App die Verwaltung von Zahnarztterminen und sendet Erinnerungen für Vorsorgeuntersuchungen.
+    <string name="log_end_timer">Timer ended</string>
+    <string name="toolbar_name">Clean Smile</string>
+    <string name="menu_main">Main Page</string>
+    <string name="menu_data">Show Data</string>
+    <string name="menu_about">About us</string>
+    <string name="menu_reminder">Set Reminder</string>
+    <string name="menu_exit">Exit</string>
 
-<b>Tipps und Informationen und Notfallkontakte:</b><br/>
-Unsere App bietet umfassende Tipps zur Mundgesundheit, einschließlich der Bedeutung von Zahnseide, der Auswahl der richtigen Zahnbürste und der Rolle einer gesunden Ernährung für starke Zähne. Benutzer haben außerdem Zugriff auf Notfallkontakte, um schnell auf einen Zahnarzt oder eine Zahnklinik zugreifen zu können.
-
-<b>Anpassung an verschiedene Altersgruppen:</b><br/>
-CleanSmile wird darauf ausgerichtet, die Zahnpflege für Menschen jeden Alters zugänglich und effektiv zu gestalten. Durch spezifische Funktionen richtet sich unsere App an Kinder, Jugendliche, Erwachsene und Senioren gleichermaßen.
-        Sie bietet spielerische Anleitungen für Kinder, unterstützt Teenager bei der Pflege von Zahnspangen, hilft Erwachsenen bei der Vorbeugung von Zahnfleischerkrankungen und fördert die Mundgesundheit von Senioren.
-        Diese anpassungsfähigen Funktionen gewährleisten eine ganzheitliche Zahnpflege für jedes Familienmitglied, unabhängig von Alter oder Lebensphase.</string>
+    <string name="about_us_text">\n\n\nDevelopers: Albulena and Laura\n\n\n  Students of medical informatics\n\n\nDevelop Year: 2024</string>
 
 </resources>

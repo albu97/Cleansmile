@@ -57,7 +57,6 @@ public class SensorCamera {
         );
     }
 
-    // Define REQUIRED_PERMISSIONS as a String array
     private static final String[] REQUIRED_PERMISSIONS = new String[]{
             Manifest.permission.CAMERA,
             Manifest.permission.WRITE_EXTERNAL_STORAGE

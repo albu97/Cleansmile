@@ -1,6 +1,5 @@
 package com.example.cleansmile;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,7 +24,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class RealMainActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -106,9 +104,8 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
     }
 
     public void ShowDataClick(View view) {
-        Intent intent = new Intent(this, SensorDataActivity.class);
-        startActivity(intent);
-        //showSensorData();
+
+        showSensorData();
     }
 
     public void SetReminderClick(View view) {
@@ -117,17 +114,17 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
     }
 
     public void AboutClick(View view) {
-        Toast.makeText(this, "Über uns-Seite !!!!", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, AboutUsActivity.class);
+        Toast.makeText(this,getString(R.string.about_us_toast), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this,AboutUsActivity.class);
         startActivity(intent);
     }
 
     public void ExitClick(View view) {
         AlertDialog.Builder warningWindow = new AlertDialog.Builder(RealMainActivity.this);
-        warningWindow.setTitle("Exit");
-        warningWindow.setMessage("Are you sure you want to exit?");
+        warningWindow.setTitle(R.string.exit_title);
+        warningWindow.setMessage(R.string.exit_message);
 
-        warningWindow.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        warningWindow.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 finishAffinity();
@@ -135,7 +132,7 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
             }
         });
 
-        warningWindow.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        warningWindow.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -150,7 +147,7 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("KinderFunktionen", "Start Button clicked");
+                Log.d("KinderFunktionen", getString(R.string.log_kinder_sta_b_click));
                 registerSensors();
                 kinderFunktionen();
             }
@@ -158,14 +155,14 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("KinderFunktionen", "Stop Button clicked");
+                Log.d("KinderFunktionen", getString(R.string.log_kinder_sto_b_click));
                 stopTimer();
             }
         });
         resumeB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("KinderFunktionen", "Resume Button clicked");
+                Log.d("KinderFunktionen", getString(R.string.log_kinder_res_b_click));
                 resumeTimer();
                 registerSensors();
             }
@@ -183,7 +180,7 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("ErwachseneFunktionen", "Start Button clicked");
+                Log.d("ErwachseneFunktionen", getString(R.string.log_erwachs_sta_b_click));
                 registerSensors();
                 erwachseneFunktionen();
             }
@@ -191,14 +188,14 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("ErwachseneFunktionen", "Stop Button clicked");
+                Log.d("ErwachseneFunktionen", getString(R.string.log_erwachs_sto_b_click));
                 stopTimer();
             }
         });
         resumeB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("ErwachseneFunktionen", "Resume Button clicked");
+                Log.d("ErwachseneFunktionen", getString(R.string.log_erwachs_res_b_click));
                 resumeTimer();
                 registerSensors();
             }
@@ -216,7 +213,7 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("SeniorFunktionen", "Start Button clicked");
+                Log.d("SeniorFunktionen", getString(R.string.log_senior_res_b_click));
                 registerSensors();
                 seniorFunktionen();
             }
@@ -224,14 +221,14 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("SeniorFunktionen", "Stop Button clicked");
+                Log.d("SeniorFunktionen", getString(R.string.log_senior_res_b_click));
                 stopTimer();
             }
         });
         resumeB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("SeniorFunktionen", "Resume Button clicked");
+                Log.d("SeniorFunktionen", getString(R.string.log_senior_res_b_click));
                 resumeTimer();
                 registerSensors();
             }
@@ -258,7 +255,7 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
             @Override
             public void onFinish() {
                 stopVideo();
-                Log.d("RealMainActivity", "Timer ended");
+                Log.d("RealMainActivity", getString(R.string.log_end_timer));
                 timerTextView.setText(getString(R.string.timer_over));
                 registerSensors();
 
