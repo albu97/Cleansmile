@@ -29,8 +29,9 @@ import java.util.Objects;
 
 public class RealMainActivity extends AppCompatActivity implements SensorEventListener {
 
-    public static final String NAME ="com.example.cleansmile.extra.NAME";
-
+    public static final String NAME = "com.example.cleansmile.extra.NAME";
+    Button stopButton = findViewById(R.id.stopButton);
+    Button restartB = findViewById(R.id.restartButton);
     DrawerLayout menu;
     private SensorManager sensorManager;
     private Sensor accelerometer;
@@ -49,7 +50,7 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         sensorCamera.requestPermissions();
 
         Intent intent = getIntent();
-        String holeselektiertesAlter=intent.getStringExtra(AlterWaehlenActivity.NAME);
+        String holeselektiertesAlter = intent.getStringExtra(AlterWaehlenActivity.NAME);
 
         timerTextView = findViewById(R.id.timer_sekunden);
         webView = findViewById(R.id.video_screen);
@@ -75,7 +76,7 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         }
     }
 
-    public void ClickOnMenu(View view){
+    public void ClickOnMenu(View view) {
         RealMainActivity.openMenu(menu);
     }
 
@@ -83,39 +84,39 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         menu.openDrawer(GravityCompat.START);
     }
 
-    public void LogoClick(View view){
+    public void LogoClick(View view) {
         closeMenu(menu);
-   }
+    }
 
     public static void closeMenu(DrawerLayout menu) {
-        if(menu.isDrawerOpen(GravityCompat.START)){
+        if (menu.isDrawerOpen(GravityCompat.START)) {
             menu.closeDrawer(GravityCompat.START);
         }
     }
 
-    public void MainPageClick(View view){
+    public void MainPageClick(View view) {
         recreate();
     }
 
-    public void ShowDataClick(View view){
-        Intent intent = new Intent(this,SensorDataActivity.class);
+    public void ShowDataClick(View view) {
+        Intent intent = new Intent(this, SensorDataActivity.class);
         startActivity(intent);
         //showSensorData();
     }
 
-    public void SetReminderClick(View view){
-        Intent intent = new Intent(this,AddReminder.class);
+    public void SetReminderClick(View view) {
+        Intent intent = new Intent(this, AddReminder.class);
         startActivity(intent);
     }
 
-    public void AboutClick(View view){
+    public void AboutClick(View view) {
         //About us Aktivität, werde morgen erstellen!
-        Toast.makeText(this,"Über uns-Seite !!!!", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this,AboutUsActivity.class);
+        Toast.makeText(this, "Über uns-Seite !!!!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, AboutUsActivity.class);
         startActivity(intent);
     }
 
-    public void ExitClick(View view){
+    public void ExitClick(View view) {
         //About us Aktivität, werde morgen erstellen!
         AlertDialog.Builder warningWindow = new AlertDialog.Builder(RealMainActivity.this);
         warningWindow.setTitle("Exit");
@@ -156,7 +157,6 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         String videoUrl = "https://www.youtube.com/embed/wCio_xVlgQ0";
         playVideo(videoUrl);
         startTimer();
-        restart();
     }
 
     private void setupErwachseneFunktionen() {
@@ -174,8 +174,6 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         String videoUrl = "https://www.youtube.com/embed/XcC3IhE9nlQ";
         playVideo(videoUrl);
         startTimer();
-        restart();
-
     }
 
     private void setupSeniorFunktionen() {
@@ -193,11 +191,10 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         String videoUrl = "https://www.youtube.com/embed/gAODutgIIVQ&t=20s";
         playVideo(videoUrl);
         startTimer();
-        restart();
     }
 
     private void startTimer() {
-        Button reButton = findViewById(R.id.restartButton);
+
         CountDownTimer countDown = new CountDownTimer(140000, 1000) {
             @SuppressLint("SetTextI18n")
             @Override
@@ -213,10 +210,18 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
                 registerSensors();
             }
         }.start();
-        boolean clicked = reButton.isClickable();
-        if(clicked){
-            stopTimer(countDown);
-        restart();}
+        restartB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                restart();
+            }
+        });
+        stopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pauseTimer(countDown);
+            }
+        });
     }
 
 
@@ -304,31 +309,31 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         super.onResume();
     }
 
-    public void restart(){
-        TextView timer = findViewById(R.id.timer_sekunden);
-        Button restartB = findViewById(R.id.restartButton);
-        restartB.setOnClickListener(new View.OnClickListener() {
+    public void restart() {
+        new CountDownTimer(140000, 1000) {
             @Override
-            public void onClick(View v) {
-                new CountDownTimer(120000, 1000) {
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-                        timer.setText("Remaining time: "+ millisUntilFinished/1000);
-                    }
-                    @Override
-                    public void onFinish() {
-                    }
-                };onStart();
+            public void onTick(long millisUntilFinished) {
+                timerTextView.setText("Remaining time: " + millisUntilFinished / 1000);
             }
-        });
+
+            @Override
+            public void onFinish() {
+            }
+        };
+        onStart();
+
     }
 
-    public void stopTimer(CountDownTimer countDown){
-
+    public void stopTimer(CountDownTimer countDown) {
         if (countDown != null) {
-
             countDown.cancel();
         }
+    }
+
+    public void pauseTimer(CountDownTimer cdt) {
+        cdt.cancel();
+        String sec = (String) timerTextView.getText();
+        timerTextView.setText(getString(R.string.remaining_time) + sec);
     }
 
     public void realMainClass(FileUtils.ProgressListener listener) {
