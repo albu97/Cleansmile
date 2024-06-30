@@ -36,9 +36,13 @@ android {
 
 dependencies {
 
-   /* def room_version = "2.4.2"
-    implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version" */
+        def camerax_version = "2.0.0-beta07"
+        implementation "androidx.camera:camera-core:${camerax_version}"
+        implementation "androidx.camera:camera-camera2:$camerax_version"
+        implementation "androidx.camera:camera-lifecycle:$camerax_version"
+        implementation "androidx.camera:camera-view:1.0.0-alpha24"
+        implementation "androidx.camera:camera-extensions:1.0.0-alpha24“
+
 
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
@@ -48,14 +52,10 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment:2.7.7")
     implementation("androidx.navigation:navigation-ui:2.7.7")
     implementation("androidx.camera:camera-core:1.3.4")
+    implementation("androidx.camera:camera-lifecycle:1.3.4")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    /* Versuch room zu erstellen (Lehrer fragen)
-    def room_version = "2.2.6"
-    implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
-    */
 
 }
