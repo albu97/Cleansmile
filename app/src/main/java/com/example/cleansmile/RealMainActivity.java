@@ -1,9 +1,9 @@
 package com.example.cleansmile;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -13,7 +13,6 @@ import android.os.CountDownTimer;
 import android.os.FileUtils;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -26,8 +25,11 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class RealMainActivity extends AppCompatActivity implements SensorEventListener {
+
+    public static final String NAME ="com.example.cleansmile.extra.NAME";
 
     DrawerLayout menu;
     private SensorManager sensorManager;
@@ -36,17 +38,14 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
     private TextView timerTextView;
     private WebView webView;
     private Button startButton;
-    private static ArrayList<String> sensorDataList = new ArrayList<>();
-    private FileUtils.ProgressListener listener;
-
-    private SensorCamera sensorCamera;
+    private static final ArrayList<String> sensorDataList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_real_main);
 
-        sensorCamera = new SensorCamera(this);
+        SensorCamera sensorCamera = new SensorCamera(this);
         sensorCamera.requestPermissions();
 
         Intent intent = getIntent();
@@ -60,8 +59,10 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 
+        menu = findViewById(R.id.background_menu);
 
-        switch (holeselektiertesAlter) {
+
+        switch (Objects.requireNonNull(holeselektiertesAlter)) {
             case "3-12":
                 setupKinderFunktionen();
                 break;
@@ -75,7 +76,7 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
     }
 
     public void ClickOnMenu(View view){
-        openMenu(menu);
+        RealMainActivity.openMenu(menu);
     }
 
     public static void openMenu(DrawerLayout menu) {
@@ -103,13 +104,15 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
     }
 
     public void SetReminderClick(View view){
-        Intent intent = new Intent(this, AddReminder.class);
+        Intent intent = new Intent(this,AddReminder.class);
         startActivity(intent);
     }
 
     public void AboutClick(View view){
         //About us Aktivität, werde morgen erstellen!
         Toast.makeText(this,"Über uns-Seite !!!!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this,AboutUsActivity.class);
+        startActivity(intent);
     }
 
     public void ExitClick(View view){
@@ -155,7 +158,6 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         startTimer();
     }
 
-
     private void setupErwachseneFunktionen() {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,6 +195,7 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
 
     private void startTimer() {
         new CountDownTimer(140000, 1000) {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onTick(long millisUntilFinished) {
                 timerTextView.setText(getString(R.string.remaining_time) + millisUntilFinished / 1000);
@@ -208,15 +211,12 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         }.start();
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void playVideo(String videoUrl) {
         if (webView != null) {
 
             webView.getSettings().setJavaScriptEnabled(true);
             webView.setWebViewClient(new WebViewClient() {
-                @Override
-                public void onPageFinished(WebView view, String url) {
-
-                }
             });
 
             String htmlTemplate = "<html><body><iframe width=\"100%\" height=\"100%\" src=\"" + videoUrl +
@@ -226,6 +226,7 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         }
 
     }
+
     private void stopVideo() {
         if (webView != null) {
             webView.post(new Runnable() {
@@ -255,6 +256,7 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         intent.putStringArrayListExtra("sensorData", sensorDataList);
         startActivity(intent);
     }
+
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -293,7 +295,6 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         super.onResume();
     }
 
-
     public void restart(){
         TextView timer = findViewById(R.id.timer_sekunden);
         Button restartB = findViewById(R.id.restartButton);
@@ -314,12 +315,10 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
 
                     }
                 };
-
             }
-        });
+        });onStart();
     }
     public void realMainClass(FileUtils.ProgressListener listener) {
-        this.listener = listener;}
-
+    }
 }
 

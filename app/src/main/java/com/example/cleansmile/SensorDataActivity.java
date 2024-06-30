@@ -23,6 +23,6 @@ public class SensorDataActivity extends AppCompatActivity {
         sensorDataListView.setAdapter(adapter);
 
     }
-    public void sensorActivclass(FileUtils.ProgressListener listener) {
+    public void sensorDataclass(FileUtils.ProgressListener listener) {
         this.listener = listener;}
 }

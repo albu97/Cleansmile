@@ -2,6 +2,7 @@ package com.example.cleansmile;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.DialogInterface;
@@ -28,7 +29,7 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize UI components
+
         menu = findViewById(R.id.background_menu);
         Button logButton = findViewById(R.id.LogButton);
         SeekBar zoom = findViewById(R.id.zoom);
@@ -37,7 +38,7 @@ public class StartActivity extends AppCompatActivity {
         Button newUser = findViewById(R.id.newUser);
         TextView textZoom = findViewById(R.id.textZoom);
 
-        // Initialize Database Helper
+
         myHelper = new MyDatabaseHelper(this);
 
         WindowManager wm = getWindowManager();
@@ -47,7 +48,7 @@ public class StartActivity extends AppCompatActivity {
         int maxScreenSize = Math.max(size.x, size.y);
         zoom.setMax(maxScreenSize);
 
-        // Set up login button click listener
+
         logButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +64,7 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
-        // Set up new user button click listener
+
         newUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +81,6 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
-        // Set up zoom seek bar change listener
         zoom.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -94,12 +94,12 @@ public class StartActivity extends AppCompatActivity {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                // No action needed
+
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                // No action needed
+
             }
         });
     }
@@ -112,37 +112,42 @@ public class StartActivity extends AppCompatActivity {
         RealMainActivity.closeMenu(menu);
     }
 
+    public static void closeMenu(DrawerLayout menu) {
+        if(menu.isDrawerOpen(GravityCompat.START)){
+            menu.closeDrawer(GravityCompat.START);
+        }
+    }
+
     public void MainPageClick(View view) {
         recreate();
     }
 
     public void ShowDataClick(View view) {
-        Toast.makeText(this, "You have to log in!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.log_in_toast, Toast.LENGTH_SHORT).show();
     }
 
     public void SetReminderClick(View view) {
-        Intent intent = new Intent(this, AddReminder.class);
-        startActivity(intent);
+        Toast.makeText(this, R.string.log_in_toast, Toast.LENGTH_SHORT).show();
     }
 
     public void AboutClick(View view) {
         Toast.makeText(this, "Über uns-Seite !!!!", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(StartActivity.this, AddReminder.class);
-        startActivity(intent);
+        //Intent intent = new Intent(StartActivity.this, AddReminder.class);
+       // startActivity(intent);
     }
 
     public void ExitClick(View view) {
         AlertDialog.Builder warningWindow = new AlertDialog.Builder(StartActivity.this);
-        warningWindow.setTitle("Exit");
-        warningWindow.setMessage("Are you sure you want to exit?");
-        warningWindow.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        warningWindow.setTitle(R.string.exit_title);
+        warningWindow.setMessage(R.string.exit_message);
+        warningWindow.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 finishAffinity();
                 System.exit(0);
             }
         });
-        warningWindow.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        warningWindow.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();

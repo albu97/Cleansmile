@@ -17,6 +17,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.FileUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,6 +38,7 @@ public class AddReminder extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_reminder);
 
+        menu = findViewById(R.id.background_menu);
         timePicker = findViewById(R.id.time_picker);
         messageEditText = findViewById(R.id.message_edit_text);
         reminderButton = findViewById(R.id.addReminderButton);
@@ -44,33 +46,37 @@ public class AddReminder extends AppCompatActivity {
         reminderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int hour = timePicker.getHour();
-                int minute = timePicker.getMinute();
-                String message = messageEditText.getText().toString();
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    if (!NotificationManagerCompat.from(AddReminder.this).areNotificationsEnabled()) {
-                        ActivityCompat.requestPermissions(AddReminder.this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 123);
-                        return;
-                    }
-                }
-
-
-                Intent intent = new Intent(AddReminder.this, ReminderReceiver.class);
-                intent.putExtra("message", message);
-
-
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(AddReminder.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-                alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, getTriggerTime(hour, minute), AlarmManager.INTERVAL_DAY, pendingIntent);
-
-                Toast.makeText(AddReminder.this, R.string.reminder_set + hour + ":" + minute, Toast.LENGTH_SHORT).show();
+                setReminder();
             }
         });
 
     }
+
+    private void setReminder(){
+        int hour = timePicker.getHour();
+        int minute = timePicker.getMinute();
+        String message = messageEditText.getText().toString();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (!NotificationManagerCompat.from(AddReminder.this).areNotificationsEnabled()) {
+                ActivityCompat.requestPermissions(AddReminder.this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 123);
+                return;
+            }
+        }
+            Intent intent = new Intent(AddReminder.this, ReminderReceiver.class);
+            intent.putExtra("message", message);
+
+
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(AddReminder.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, getTriggerTime(hour, minute), AlarmManager.INTERVAL_DAY, pendingIntent);
+
+            Toast.makeText(AddReminder.this, R.string.reminder_set + hour + ":" + minute, Toast.LENGTH_SHORT).show();
+        }
+
+
 
     private long getTriggerTime(int hour, int minute) {
         Calendar calendar = Calendar.getInstance();
@@ -85,25 +91,17 @@ public class AddReminder extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 123) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                int hour = timePicker.getHour();
-                int minute = timePicker.getMinute();
-                String message = messageEditText.getText().toString();
-
-                Intent intent = new Intent(AddReminder.this, ReminderReceiver.class);
-                intent.putExtra("message", message);
-
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(AddReminder.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-                alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, getTriggerTime(hour, minute), AlarmManager.INTERVAL_DAY, pendingIntent);
-
-                Toast.makeText(AddReminder.this, R.string.reminder_set + hour + ":" + minute, Toast.LENGTH_SHORT).show();
+                setReminder();
             } else {
                 Toast.makeText(this, R.string.permission_denied, Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("AddReminder", "AddReminder onResume");
     }
 
     public void ClickOnMenu(View view){
@@ -133,8 +131,7 @@ public class AddReminder extends AppCompatActivity {
     }
 
     public void SetReminderClick(View view){
-        Intent intent = new Intent(this, AddReminder.class);
-        startActivity(intent);
+        recreate();
     }
 
     public void AboutClick(View view){
@@ -143,7 +140,7 @@ public class AddReminder extends AppCompatActivity {
     }
 
     public void ExitClick(View view){
-        //About us Aktivität, werde morgen erstellen!
+
         AlertDialog.Builder warningWindow = new AlertDialog.Builder(AddReminder.this);
         warningWindow.setTitle("Exit");
         warningWindow.setMessage("Are you sure you want to exit?");
@@ -166,5 +163,8 @@ public class AddReminder extends AppCompatActivity {
 
         warningWindow.show();
     }
+
+    public void sensorActivclass(FileUtils.ProgressListener listener) {
+        this.listener = listener;}
 
 }
