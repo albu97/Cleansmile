@@ -17,7 +17,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.FileUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,19 +52,21 @@ public class AddReminder extends AppCompatActivity {
     }
 
     private void setReminder(){
+
         int hour = timePicker.getHour();
         int minute = timePicker.getMinute();
         String message = messageEditText.getText().toString();
 
+        //berechtigung der benachrichtungen,erteilung? , anfordern
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (!NotificationManagerCompat.from(AddReminder.this).areNotificationsEnabled()) {
                 ActivityCompat.requestPermissions(AddReminder.this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 123);
                 return;
             }
         }
+        //ReminderReceiver zur angegeben zeit auslösen
             Intent intent = new Intent(AddReminder.this, ReminderReceiver.class);
             intent.putExtra("message", message);
-
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(AddReminder.this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
@@ -75,8 +76,6 @@ public class AddReminder extends AppCompatActivity {
 
             Toast.makeText(AddReminder.this, R.string.reminder_set + hour + ":" + minute, Toast.LENGTH_SHORT).show();
         }
-
-
 
     private long getTriggerTime(int hour, int minute) {
         Calendar calendar = Calendar.getInstance();
@@ -97,6 +96,7 @@ public class AddReminder extends AppCompatActivity {
             }
         }
     }
+
 
     @Override
     protected void onResume() {
@@ -163,6 +163,7 @@ public class AddReminder extends AppCompatActivity {
         warningWindow.show();
     }
 
+    //?
     public void sensorActivclass(FileUtils.ProgressListener listener) {
         this.listener = listener;}
 

@@ -27,14 +27,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cleansmile"
         tools:targetApi="31">
-
+        <activity
+            android:name=".CameraSensor"
+            android:exported="false" />
         <activity
             android:name=".AboutUsActivity"
             android:exported="false" />
-
-        <activity android:name=".AddReminder"
-            android:theme="@style/Theme.Cleansmile"/>
-
+        <activity
+            android:name=".AddReminder"
+            android:theme="@style/Theme.Cleansmile" />
         <activity
             android:name=".SensorDataActivity"
             android:exported="false"
@@ -42,11 +43,11 @@
         <activity
             android:name=".RealMainActivity"
             android:exported="false"
-            android:theme="@style/Theme.Cleansmile"/>
+            android:theme="@style/Theme.Cleansmile" />
         <activity
             android:name=".AlterWaehlenActivity"
             android:exported="false"
-            android:theme="@style/Theme.Cleansmile"/>
+            android:theme="@style/Theme.Cleansmile" />
         <activity
             android:name=".MainTabbedActivity"
             android:exported="false"
