@@ -50,7 +50,7 @@ public class RealMainActivity extends AppCompatActivity implements SensorEventLi
         setContentView(R.layout.activity_real_main);
 
 
-        SensorCamera sensorCamera = new SensorCamera(this);
+        CameraSensor sensorCamera = new CameraSensor(this);
         sensorCamera.requestPermissions();
 
         Intent intent = getIntent();
